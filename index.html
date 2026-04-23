@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Persona Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #fafaf9;
+    --surface: #ffffff;
+    --ink: #2a2a2a;
+    --ink-soft: #5a5a5a;
+    --ink-dim: #9a9a9a;
+    --ink-faint: #c8c8c8;
+    --line: #ececea;
+    --line-soft: #f2f2f0;
+    --hover: #f5f5f3;
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 64px 40px 80px;
+  }
+  @media (max-width: 640px) {
+    .wrap { padding: 40px 20px 60px; }
+  }
+
+  header {
+    margin-bottom: 56px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--line);
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(38px, 5vw, 54px);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: var(--ink);
+  }
+  h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink-soft);
+  }
+  .lead {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    color: var(--ink-soft);
+    margin-top: 12px;
+    max-width: 500px;
+    font-weight: 300;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 64px;
+  }
+  @media (max-width: 820px) {
+    .grid { grid-template-columns: 1fr; gap: 48px; }
+  }
+
+  .controls-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .field { margin-bottom: 20px; }
+  .field label {
+    display: block;
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  .field label .en {
+    color: var(--ink-faint);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    margin-left: 6px;
+  }
+
+  select {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    padding: 10px 34px 10px 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'><path d='M2 4L5 7L8 4' stroke='%239a9a9a' fill='none' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    border-radius: 2px;
+  }
+  select:hover { border-color: var(--ink-dim); }
+  select:focus { outline: none; border-color: var(--ink); }
+
+  .summon-btn {
+    width: 100%;
+    margin-top: 20px;
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    padding: 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+    border-radius: 2px;
+  }
+  .summon-btn:hover { background: #1a1a1a; }
+  .summon-btn:active { transform: scale(0.99); }
+
+  /* optional traits section */
+  .optional-section {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .optional-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .check-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.15s;
+  }
+  .check-row:hover { color: var(--ink); }
+  .check-row input {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--ink-faint);
+    border-radius: 2px;
+    margin-right: 10px;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    background: var(--surface);
+  }
+  .check-row input:hover { border-color: var(--ink-dim); }
+  .check-row input:checked {
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+  .check-row input:checked::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 4px;
+    height: 8px;
+    border: solid var(--bg);
+    border-width: 0 1.5px 1.5px 0;
+    transform: rotate(45deg);
+  }
+  .check-row-label {
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .check-row-en {
+    color: var(--ink-faint);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    margin-left: 6px;
+  }
+
+  .hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-dim);
+    margin-top: 12px;
+    text-align: center;
+  }
+  .hint kbd {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 1px 5px;
+    border-radius: 2px;
+    font-family: inherit;
+    font-size: 9px;
+    color: var(--ink-soft);
+  }
+
+  .result-wrap { min-height: 500px; }
+
+  .empty {
+    height: 100%;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .empty-mark {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 88px;
+    color: var(--ink-faint);
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+  .empty p {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink-dim);
+    font-size: 17px;
+    max-width: 260px;
+    line-height: 1.5;
+  }
+
+  .persona {
+    animation: fadeUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .persona-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 28px;
+  }
+  .persona-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-dim);
+    letter-spacing: 0.1em;
+  }
+  .persona-count {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 15px;
+    color: var(--ink-dim);
+  }
+
+  /* pagination */
+  .pager {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .pager-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink-soft);
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 2px;
+    padding: 0;
+  }
+  .pager-btn:hover:not(:disabled) {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+  .pager-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  .pager-btn svg {
+    display: block;
+  }
+  .pager-position {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-dim);
+    padding: 0 10px;
+    letter-spacing: 0.05em;
+    min-width: 54px;
+    text-align: center;
+  }
+  .pager-position .sep {
+    color: var(--ink-faint);
+    margin: 0 4px;
+  }
+
+  .traits {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 48px;
+    margin-bottom: 40px;
+  }
+  @media (max-width: 520px) {
+    .traits { grid-template-columns: 1fr; gap: 0; }
+  }
+  .trait {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line-soft);
+    align-items: baseline;
+  }
+  .trait-label {
+    font-size: 11px;
+    color: var(--ink-dim);
+  }
+  .trait-value {
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .trait-value .en {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-dim);
+    margin-top: 2px;
+  }
+
+  .tag-block {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 20px;
+  }
+  .tag-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .tag-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+  }
+  .copy-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink-soft);
+    padding: 5px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 2px;
+  }
+  .copy-btn:hover { border-color: var(--ink); color: var(--ink); }
+  .copy-btn.copied { border-color: var(--ink); background: var(--ink); color: var(--bg); }
+
+  .tag-output {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.9;
+    color: var(--ink-soft);
+    word-break: break-word;
+  }
+  .tag {
+    display: inline-block;
+    margin: 2px 1px;
+    padding: 2px 8px;
+    background: var(--hover);
+    color: var(--ink);
+    border-radius: 2px;
+    transition: background 0.15s;
+  }
+  .tag:hover { background: #e8e8e6; }
+
+  footer {
+    margin-top: 80px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.1em;
+  }
+  footer em {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 0;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Random Character Tool</div>
+    <h1>Persona <em>Generator</em></h1>
+  </header>
+
+  <div class="grid">
+    <aside>
+      <div class="controls-label">Parameters</div>
+
+      <div class="field">
+        <label>성별<span class="en">gender</span></label>
+        <select id="opt-gender">
+          <option value="random">Random</option>
+          <option value="female">여성</option>
+          <option value="male">남성</option>
+          <option value="androgynous">중성</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>종족<span class="en">species</span></label>
+        <select id="opt-species">
+          <option value="random">Random</option>
+          <option value="human">인간</option>
+          <option value="elf">엘프</option>
+          <option value="dark elf">다크 엘프</option>
+          <option value="beastkin">수인</option>
+          <option value="dragon">드래곤</option>
+          <option value="demon">마족</option>
+          <option value="angel">천사</option>
+          <option value="vampire">뱀파이어</option>
+          <option value="mermaid">인어</option>
+          <option value="ghost">유령</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>피부<span class="en">skin</span></label>
+        <select id="opt-skin">
+          <option value="random">Random</option>
+          <option value="pale skin">창백함</option>
+          <option value="fair skin">밝음</option>
+          <option value="light brown skin">햇빛탄</option>
+          <option value="dark skin">어두움</option>
+          <option value="very dark skin">매우 어두움</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>체형<span class="en">build</span></label>
+        <select id="opt-build">
+          <option value="random">Random</option>
+          <option value="petite">작고 가냘픔</option>
+          <option value="slim">슬림</option>
+          <option value="average">평균</option>
+          <option value="curvy">굴곡진 체형</option>
+          <option value="athletic">운동선수형</option>
+          <option value="tall">장신</option>
+          <option value="chubby">통통함</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>의상<span class="en">outfit</span></label>
+        <select id="opt-outfit">
+          <option value="random">Random</option>
+          <optgroup label="─ 일상 / 모던 ─">
+            <option value="casual">캐주얼</option>
+            <option value="hoodie">후드티</option>
+            <option value="oversized sweater">오버사이즈 니트</option>
+            <option value="t-shirt and jeans">티셔츠 & 진</option>
+            <option value="sundress">여름 원피스</option>
+            <option value="streetwear">스트리트웨어</option>
+          </optgroup>
+          <optgroup label="─ 교복 / 유니폼 ─">
+            <option value="school uniform">교복</option>
+            <option value="blazer uniform">블레이저 교복</option>
+            <option value="gym uniform">체육복</option>
+            <option value="nurse">간호복</option>
+            <option value="police">경찰복</option>
+            <option value="military">군복</option>
+          </optgroup>
+          <optgroup label="─ 정장 / 포멀 ─">
+            <option value="business suit">정장</option>
+            <option value="office lady">오피스룩</option>
+            <option value="evening dress">이브닝 드레스</option>
+            <option value="wedding dress">웨딩드레스</option>
+          </optgroup>
+          <optgroup label="─ 전통 / 민속 ─">
+            <option value="kimono">기모노</option>
+            <option value="yukata">유카타</option>
+            <option value="hanfu">한푸</option>
+            <option value="hanbok">한복</option>
+            <option value="china dress">치파오</option>
+          </optgroup>
+          <optgroup label="─ 판타지 ─">
+            <option value="fantasy armor">판타지 갑옷</option>
+            <option value="knight armor">기사 풀플레이트</option>
+            <option value="mage robe">마법사 로브</option>
+            <option value="witch">마녀</option>
+            <option value="priestess">무녀</option>
+            <option value="ninja">닌자</option>
+            <option value="samurai">사무라이</option>
+            <option value="pirate">해적</option>
+          </optgroup>
+          <optgroup label="─ 서브컬처 ─">
+            <option value="maid">메이드복</option>
+            <option value="gothic lolita">고딕 로리타</option>
+            <option value="idol costume">아이돌 의상</option>
+            <option value="cheerleader">치어리더</option>
+          </optgroup>
+          <optgroup label="─ 기타 ─">
+            <option value="swimsuit">수영복</option>
+            <option value="bikini">비키니</option>
+            <option value="winter coat">겨울 코트</option>
+            <option value="leather jacket">라이더 재킷</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="optional-section">
+        <div class="optional-label">Include</div>
+        <label class="check-row">
+          <input type="checkbox" id="inc-age">
+          <span class="check-row-label">나이<span class="check-row-en">age</span></span>
+        </label>
+        <label class="check-row">
+          <input type="checkbox" id="inc-personality" checked>
+          <span class="check-row-label">성격<span class="check-row-en">personality</span></span>
+        </label>
+        <label class="check-row">
+          <input type="checkbox" id="inc-expression" checked>
+          <span class="check-row-label">표정<span class="check-row-en">expression</span></span>
+        </label>
+        <label class="check-row">
+          <input type="checkbox" id="inc-pose" checked>
+          <span class="check-row-label">포즈<span class="check-row-en">pose</span></span>
+        </label>
+        <label class="check-row">
+          <input type="checkbox" id="inc-accessory" checked>
+          <span class="check-row-label">액세서리<span class="check-row-en">accessory</span></span>
+        </label>
+        <label class="check-row">
+          <input type="checkbox" id="inc-detail">
+          <span class="check-row-label">특수 디테일<span class="check-row-en">detail</span></span>
+        </label>
+        <label class="check-row">
+          <input type="checkbox" id="inc-composition" checked>
+          <span class="check-row-label">구도<span class="check-row-en">composition</span></span>
+        </label>
+      </div>
+
+      <button class="summon-btn" id="summon">Generate</button>
+      <div class="hint">
+        <kbd>Space</kbd> 생성 · <kbd>←</kbd> <kbd>→</kbd> 이동
+      </div>
+    </aside>
+
+    <main class="result-wrap" id="result">
+      <div class="empty">
+        <div class="empty-mark">✳</div>
+        <p>Generate 버튼을 눌러<br>페르소나를 만들어보세요.</p>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div id="session">SID · —</div>
+    <em>formatted for stable diffusion / nai</em>
+  </footer>
+</div>
+
+<script>
+const DATA = {
+  gender: {
+    female:       { ko: "여성",  tag: "1girl" },
+    male:         { ko: "남성",  tag: "1boy" },
+    androgynous:  { ko: "중성",  tag: "1other, androgynous" }
+  },
+  species: {
+    human:      { ko: "인간",            tags: [] },
+    elf:        { ko: "엘프",            tags: ["elf", "pointy ears"] },
+    "dark elf": { ko: "다크 엘프",       tags: ["dark elf", "pointy ears"] },
+    beastkin:   { ko: "수인",            tags: [] }, // 아래 beastkinAnimal에서 세부 결정
+    dragon:     { ko: "드래곤",          tags: ["dragon horns", "dragon tail", "scales", "slit pupils"] },
+    demon:      { ko: "마족",            tags: ["demon horns", "demon tail", "pointy ears"] },
+    angel:      { ko: "천사",            tags: ["angel wings", "halo"] },
+    vampire:    { ko: "뱀파이어",        tags: ["vampire", "fangs", "pale skin"] },
+    mermaid:    { ko: "인어",            tags: ["mermaid", "monster girl"] },
+    ghost:      { ko: "유령",            tags: ["ghost", "transparent"] }
+  },
+
+  // 수인 세부 동물 (species가 beastkin일 때만 사용)
+  beastkinAnimal: {
+    cat:       { ko: "고양이",   tags: ["animal ears", "cat ears", "cat tail", "animal ear fluff"] },
+    fox:       { ko: "여우",     tags: ["animal ears", "fox ears", "fox tail", "animal ear fluff"] },
+    wolf:      { ko: "늑대",     tags: ["animal ears", "wolf ears", "wolf tail"] },
+    dog:       { ko: "개",       tags: ["animal ears", "dog ears", "dog tail"] },
+    rabbit:    { ko: "토끼",     tags: ["animal ears", "rabbit ears", "rabbit tail"] },
+    mouse:     { ko: "쥐",       tags: ["animal ears", "mouse ears", "mouse tail"] },
+    tiger:     { ko: "호랑이",   tags: ["animal ears", "tiger ears", "tiger tail", "animal ear fluff"] },
+    lion:      { ko: "사자",     tags: ["animal ears", "lion ears", "lion tail", "animal ear fluff"] },
+    bear:      { ko: "곰",       tags: ["animal ears", "bear ears", "animal ear fluff"] },
+    deer:      { ko: "사슴",     tags: ["animal ears", "deer ears", "antlers"] },
+    sheep:     { ko: "양",       tags: ["animal ears", "sheep ears", "sheep horns"] },
+    goat:      { ko: "염소",     tags: ["animal ears", "goat ears", "goat horns"] },
+    horse:     { ko: "말",       tags: ["animal ears", "horse ears", "horse tail"] },
+    cow:       { ko: "소",       tags: ["animal ears", "cow ears", "cow horns"] },
+    raccoon:   { ko: "너구리",   tags: ["animal ears", "raccoon ears", "raccoon tail", "animal ear fluff"] },
+    squirrel:  { ko: "다람쥐",   tags: ["animal ears", "squirrel ears", "squirrel tail", "animal ear fluff"] },
+    panda:     { ko: "판다",     tags: ["animal ears", "panda ears", "animal ear fluff"] },
+    bird:      { ko: "새",       tags: ["feathered wings", "bird tail"] },
+    snake:     { ko: "뱀",       tags: ["snake tail", "slit pupils", "scales"] }
+  },
+  skin: {
+    "pale skin":        "창백한 피부",
+    "fair skin":        "밝은 피부",
+    "light brown skin": "햇빛탄 피부",
+    "dark skin":        "어두운 피부",
+    "very dark skin":   "매우 어두운 피부"
+  },
+  hairColor: {
+    "black hair":              "검은색",
+    "dark brown hair":          "진갈색",
+    "brown hair":               "갈색",
+    "light brown hair":         "연갈색",
+    "blonde hair":              "금발",
+    "platinum blonde hair":     "플래티넘 블론드",
+    "strawberry blonde hair":   "스트로베리 블론드",
+    "white hair":               "흰색",
+    "silver hair":              "은발",
+    "grey hair":                "회색",
+    "red hair":                 "빨간색",
+    "auburn hair":              "적갈색",
+    "pink hair":                "분홍색",
+    "light pink hair":          "연분홍",
+    "purple hair":              "보라색",
+    "lavender hair":            "라벤더",
+    "dark purple hair":         "진보라",
+    "blue hair":                "파란색",
+    "light blue hair":          "연파랑",
+    "navy hair":                "네이비",
+    "aqua hair":                "아쿠아",
+    "teal hair":                "청록색",
+    "green hair":               "초록색",
+    "dark green hair":          "진초록",
+    "mint hair":                "민트",
+    "orange hair":              "주황색",
+    "gradient hair":            "그라데이션"
+  },
+  // 머리 길이는 숫자 레벨로 관리 (1: 매우 짧음 ~ 6: 아주 아주 긴)
+  hairLength: {
+    "very short hair":   { ko: "매우 짧음",        level: 1 },
+    "short hair":        { ko: "짧음",             level: 2 },
+    "medium hair":       { ko: "중간",             level: 3 },
+    "long hair":         { ko: "긴 머리",          level: 4 },
+    "very long hair":    { ko: "매우 긴 머리",     level: 5 },
+    "absurdly long hair":{ ko: "아주 아주 긴 머리", level: 6 }
+  },
+
+  // 각 스타일이 가능한 최소 머리 길이 레벨
+  hairStyle: {
+    "straight hair":    { ko: "생머리",           minLevel: 1 },
+    "wavy hair":        { ko: "웨이브",           minLevel: 1 },
+    "curly hair":       { ko: "곱슬",             minLevel: 1 },
+    "messy hair":       { ko: "흐트러진 머리",    minLevel: 1 },
+    "hair bun":         { ko: "머리 번",          minLevel: 2 },
+    "double bun":       { ko: "더블 번",          minLevel: 2 },
+    "ponytail":         { ko: "포니테일",         minLevel: 2 },
+    "side ponytail":    { ko: "사이드 포니테일",  minLevel: 3 },
+    "braid":            { ko: "땋은머리",         minLevel: 3 },
+    "twin braids":      { ko: "양갈래 땋은머리",  minLevel: 4 },
+    "twintails":        { ko: "트윈테일",         minLevel: 4 },
+    "drill hair":       { ko: "드릴 머리",        minLevel: 4 }
+  },
+
+  bangs: {
+    "blunt bangs":       { ko: "일자 앞머리",          minLevel: 1 },
+    "swept bangs":       { ko: "쓸어넘긴 앞머리",      minLevel: 1 },
+    "parted bangs":      { ko: "가르마 앞머리",        minLevel: 1 },
+    "asymmetrical bangs":{ ko: "비대칭 앞머리",        minLevel: 1 },
+    "sidelocks":         { ko: "구레나룻",             minLevel: 1 },
+    "no bangs":          { ko: "앞머리 없음",          minLevel: 1 },
+    "hair between eyes": { ko: "눈 사이 앞머리",       minLevel: 2 },
+    "hair over one eye": { ko: "한쪽 눈 가린 앞머리",  minLevel: 3 }
+  },
+  eyeShape: {
+    "round eyes":       "동그란 눈",
+    "almond-shaped eyes":"아몬드형 눈",
+    "narrow eyes":      "가느다란 눈",
+    "sharp eyes":       "날카로운 눈",
+    "droopy eyes":      "처진 눈",
+    "tsurime":          "치켜뜬 눈 (츠리메)",
+    "tareme":           "처진 눈 (타레메)",
+    "half-closed eyes": "반쯤 감은 눈"
+  },
+  eyeColor: {
+    "blue eyes":        "파란색",
+    "light blue eyes":  "하늘색",
+    "aqua eyes":        "아쿠아",
+    "teal eyes":        "청록색",
+    "green eyes":       "초록색",
+    "emerald eyes":     "에메랄드",
+    "mint eyes":        "민트",
+    "brown eyes":       "갈색",
+    "dark brown eyes":  "진갈색",
+    "hazel eyes":       "헤이즐",
+    "black eyes":       "검은색",
+    "red eyes":         "빨간색",
+    "crimson eyes":     "크림슨",
+    "pink eyes":        "분홍색",
+    "rose eyes":        "로즈",
+    "purple eyes":      "보라색",
+    "violet eyes":      "바이올렛",
+    "yellow eyes":      "노란색",
+    "amber eyes":       "호박색",
+    "orange eyes":      "주황색",
+    "grey eyes":        "회색",
+    "silver eyes":      "은색",
+    "white eyes":       "흰색"
+  },
+  build: {
+    petite:    { ko: "작고 가냘픔", tags: ["petite", "short"] },
+    slim:      { ko: "슬림",        tags: ["slim"] },
+    average:   { ko: "평균",        tags: [] },
+    curvy:     { ko: "굴곡진 체형", tags: ["curvy"] },
+    athletic:  { ko: "운동선수형",  tags: ["toned", "athletic"] },
+    tall:      { ko: "장신",        tags: ["tall female"] },
+    chubby:    { ko: "통통함",      tags: ["chubby"] }
+  },
+  breast: {
+    "flat chest":   "플랫",
+    "small breasts":"작음",
+    "medium breasts":"중간",
+    "large breasts":"큼",
+    "huge breasts": "매우 큼"
+  },
+  ageTag: {
+    "young":         "어림",
+    "teenage":       "10대",
+    "young adult":   "청년",
+    "adult":         "성인",
+    "mature female": "성숙함"
+  },
+  outfit: {
+    // 일상 / 모던
+    "casual":              { ko: "캐주얼",         tags: ["casual", "shirt", "pants"] },
+    "hoodie":              { ko: "후드티",         tags: ["hoodie", "long sleeves"] },
+    "oversized sweater":   { ko: "오버사이즈 니트", tags: ["sweater", "oversized clothes"] },
+    "t-shirt and jeans":   { ko: "티셔츠 & 진",    tags: ["t-shirt", "denim", "jeans"] },
+    "sundress":            { ko: "여름 원피스",    tags: ["sundress", "summer"] },
+    "streetwear":          { ko: "스트리트웨어",   tags: ["streetwear", "jacket", "sneakers"] },
+
+    // 교복 / 유니폼
+    "school uniform":      { ko: "교복",           tags: ["school uniform", "serafuku", "pleated skirt"] },
+    "blazer uniform":      { ko: "블레이저 교복",  tags: ["school uniform", "blazer", "necktie", "pleated skirt"] },
+    "gym uniform":         { ko: "체육복",         tags: ["gym uniform"] },
+    "nurse":               { ko: "간호복",         tags: ["nurse", "nurse cap"] },
+    "police":              { ko: "경찰복",         tags: ["police uniform"] },
+    "military":            { ko: "군복",           tags: ["military uniform", "military"] },
+
+    // 정장 / 포멀
+    "business suit":       { ko: "정장",           tags: ["business suit", "formal", "necktie"] },
+    "office lady":         { ko: "오피스룩",       tags: ["office lady", "pencil skirt", "blouse"] },
+    "evening dress":       { ko: "이브닝 드레스",  tags: ["evening gown", "formal", "long dress"] },
+    "wedding dress":       { ko: "웨딩드레스",     tags: ["wedding dress", "veil"] },
+
+    // 전통 / 민속
+    "kimono":              { ko: "기모노",         tags: ["kimono", "japanese clothes", "obi"] },
+    "yukata":              { ko: "유카타",         tags: ["yukata", "japanese clothes"] },
+    "hanfu":               { ko: "한푸",           tags: ["hanfu", "chinese clothes"] },
+    "hanbok":              { ko: "한복",           tags: ["hanbok", "korean clothes"] },
+    "china dress":         { ko: "치파오",         tags: ["china dress", "chinese clothes"] },
+
+    // 판타지 / 롤플레이
+    "fantasy armor":       { ko: "판타지 갑옷",    tags: ["armor", "breastplate", "gauntlets"] },
+    "knight armor":        { ko: "기사 풀플레이트", tags: ["knight", "full armor", "plate armor"] },
+    "mage robe":           { ko: "마법사 로브",    tags: ["robe", "wizard hat", "wide sleeves"] },
+    "witch":               { ko: "마녀",           tags: ["witch", "witch hat", "cape"] },
+    "priestess":           { ko: "무녀",           tags: ["miko", "miko outfit"] },
+    "ninja":               { ko: "닌자",           tags: ["ninja", "ninja mask"] },
+    "samurai":             { ko: "사무라이",       tags: ["samurai", "hakama"] },
+    "pirate":              { ko: "해적",           tags: ["pirate", "tricorne", "pirate coat"] },
+
+    // 서브컬처
+    "maid":                { ko: "메이드복",       tags: ["maid", "apron", "maid headdress"] },
+    "gothic lolita":       { ko: "고딕 로리타",    tags: ["gothic lolita", "frills", "lace"] },
+    "idol costume":        { ko: "아이돌 의상",    tags: ["idol", "frills"] },
+    "cheerleader":         { ko: "치어리더",       tags: ["cheerleader", "pom pom"] },
+
+    // 기타
+    "swimsuit":            { ko: "수영복",         tags: ["swimsuit"] },
+    "bikini":              { ko: "비키니",         tags: ["bikini"] },
+    "winter coat":         { ko: "겨울 코트",      tags: ["coat", "scarf", "winter clothes"] },
+    "leather jacket":      { ko: "라이더 재킷",    tags: ["leather jacket", "jacket"] }
+  },
+
+  // 성격 아키타입 → 어울리는 표정 & 포즈를 묶어서 저장
+  // 성격은 2~3개가 뽑히고, 표정/포즈는 같은 아키타입 풀에서만 뽑힘
+  archetype: {
+    cheerful: {
+      ko: "밝고 활기찬",
+      traits: {
+        "cheerful":    "밝음",
+        "energetic":   "활기참",
+        "bubbly":      "쾌활함",
+        "playful":     "장난스러움",
+        "optimistic":  "긍정적",
+        "friendly":    "친근함",
+        "lively":      "생기발랄",
+        "sociable":    "사교적"
+      },
+      expressions: {
+        "smile":                     "미소",
+        "open mouth, :d":            "활짝 웃음",
+        "grin":                      "싱긋 웃음",
+        "laughing":                  "크게 웃음",
+        "wink":                      "윙크",
+        "happy":                     "행복함",
+        "smile, closed eyes":        "눈웃음",
+        "teeth, smile":              "이 드러내며 웃음",
+        "excited":                   "신남",
+        "smile, blush":              "홍조 띤 미소",
+        "^_^":                       "눈 접힌 웃음",
+        ";d":                        "윙크 활짝 웃음"
+      },
+      poses: {
+        "waving":                    "손 흔들기",
+        "v":                         "V 사인",
+        "double v":                  "양손 V 사인",
+        "arms up":                   "양팔 올리기",
+        "jumping":                   "점프",
+        "hands on own hips":         "손 허리에",
+        "running":                   "뛰어가기",
+        "arm up":                    "한 팔 올리기",
+        "outstretched arms":         "양팔 벌리기",
+        "hand wave":                 "가볍게 손 인사",
+        "skipping":                  "깡충깡충",
+        "spinning":                  "빙글 돌기"
+      }
+    },
+    gentle: {
+      ko: "온화하고 다정한",
+      traits: {
+        "gentle":      "온화함",
+        "kind":        "다정함",
+        "caring":      "배려심 많음",
+        "warm":        "따뜻함",
+        "soft-spoken": "조용조용",
+        "motherly":    "자애로움",
+        "graceful":    "우아함",
+        "compassionate":"자비로움"
+      },
+      expressions: {
+        "soft smile":                "부드러운 미소",
+        "gentle smile":              "은은한 미소",
+        "closed eyes, smile":        "눈 감고 미소",
+        "tender expression":         "포근한 표정",
+        "half-closed eyes, smile":   "편안한 미소",
+        "light smile":               "엷은 미소",
+        "smile, parted lips":        "입 살짝 벌린 미소",
+        "warm smile":                "따뜻한 미소",
+        "smile, looking at viewer":  "바라보며 미소",
+        "closed mouth, smile":       "입 다문 미소"
+      },
+      poses: {
+        "own hands together":        "두 손 모음",
+        "hand on own chest":         "가슴에 손",
+        "head tilt":                 "고개 갸웃",
+        "looking at viewer":         "바라봄",
+        "holding flower":            "꽃 들기",
+        "reaching out":              "손 내밀기",
+        "sitting, hands on lap":     "무릎 위 손",
+        "holding book":              "책 들기",
+        "hand up, palm out":         "손바닥 보이기",
+        "hands clasped":             "두 손 맞잡기",
+        "kneeling":                  "무릎 꿇기"
+      }
+    },
+    cool: {
+      ko: "쿨하고 시크한",
+      traits: {
+        "cool":        "쿨함",
+        "composed":    "침착함",
+        "aloof":       "시크함",
+        "calm":        "차분함",
+        "confident":   "자신감",
+        "detached":    "거리감 있음",
+        "reserved":    "과묵함",
+        "collected":   "냉철함"
+      },
+      expressions: {
+        "expressionless":            "무표정",
+        "serious":                   "진지함",
+        "half-closed eyes":          "반쯤 감은 눈",
+        "slight smirk":              "살짝 미소",
+        "looking down":              "내려다봄",
+        "closed mouth":              "다문 입",
+        "narrowed eyes":             "가늘게 뜬 눈",
+        "smirk":                     "씩 웃음",
+        "cold stare":                "차가운 시선",
+        "unamused":                  "심드렁함"
+      },
+      poses: {
+        "crossed arms":              "팔짱",
+        "hand in pocket":            "주머니에 손",
+        "from side":                 "옆모습",
+        "looking away":              "시선 돌림",
+        "hand on own hip":           "한쪽 손 허리",
+        "hands in pockets":          "양손 주머니",
+        "leaning on object":         "기대어 서기",
+        "back turned":               "뒤돌아선 자세",
+        "walking away":              "걸어가는 뒷모습",
+        "against wall":              "벽에 기대기",
+        "adjusting glasses":         "안경 고쳐쓰기"
+      }
+    },
+    shy: {
+      ko: "수줍고 소심한",
+      traits: {
+        "shy":         "수줍음",
+        "timid":       "소심함",
+        "bashful":     "부끄러움",
+        "nervous":     "긴장함",
+        "quiet":       "조용함",
+        "introverted": "내성적",
+        "meek":        "얌전함",
+        "anxious":     "불안함"
+      },
+      expressions: {
+        "blush":                     "홍조",
+        "embarrassed":               "부끄러움",
+        "looking away, blush":       "시선 피하며 홍조",
+        "nervous smile":             "어색한 미소",
+        "parted lips, blush":        "입 살짝 벌림 홍조",
+        "worried":                   "걱정스러움",
+        "blush, closed mouth":       "입 다문 홍조",
+        "teary eyes, blush":         "눈물 맺힌 홍조",
+        "wavering eyes":             "흔들리는 눈",
+        "downcast eyes, blush":      "내리깐 눈 홍조"
+      },
+      poses: {
+        "fingers together":          "손가락 꼼지락",
+        "hands on own chest":        "두 손 가슴에",
+        "hiding face":               "얼굴 가림",
+        "looking down, blush":       "시선 내리깔기",
+        "hands up, covering mouth":  "손으로 입 가림",
+        "holding own arm":           "팔을 스스로 감싸기",
+        "hair tucking":              "귀 뒤로 머리 넘기기",
+        "fidgeting":                 "꼼지락거림",
+        "clutching clothes":         "옷자락 꼭 쥐기",
+        "peeking":                   "살짝 엿보기",
+        "knees together":            "무릎 붙이기"
+      }
+    },
+    fierce: {
+      ko: "당당하고 도도한",
+      traits: {
+        "fierce":      "당당함",
+        "proud":       "도도함",
+        "assertive":   "자기주장 강함",
+        "bold":        "대담함",
+        "dominant":    "카리스마",
+        "haughty":     "거만함",
+        "arrogant":    "오만함",
+        "commanding":  "위압감"
+      },
+      expressions: {
+        "smirk":                     "득의양양",
+        "sharp eyes":                "날카로운 눈빛",
+        "serious, frown":            "찡그림",
+        "confident":                 "자신만만",
+        "glaring":                   "노려봄",
+        "smug":                      "의기양양",
+        "evil smile":                "음흉한 미소",
+        "narrowed eyes, smirk":      "가늘게 뜬 눈 미소",
+        "arrogant smile":            "거만한 미소",
+        "open mouth, teeth":         "이를 드러냄"
+      },
+      poses: {
+        "hand on own hip":           "한쪽 손 허리",
+        "hands on own hips":         "양손 허리",
+        "pointing at viewer":        "손가락으로 가리킴",
+        "looking down, from below":  "내려다봄",
+        "chin up":                   "턱 들기",
+        "hand on own chest":         "가슴에 손",
+        "crossed legs":              "다리 꼬기",
+        "sitting on throne":         "왕좌에 앉기",
+        "hand extended":             "손 내밀기",
+        "confident stance":          "당당한 포즈",
+        "looking over shoulder":     "어깨 너머로 보기"
+      }
+    },
+    mysterious: {
+      ko: "신비롭고 요염한",
+      traits: {
+        "mysterious":  "신비로움",
+        "seductive":   "요염함",
+        "enigmatic":   "묘함",
+        "alluring":    "매혹적",
+        "sultry":      "관능적",
+        "elegant":     "우아함",
+        "sensual":     "감각적",
+        "bewitching":  "홀리는 듯"
+      },
+      expressions: {
+        "light smile":               "엷은 미소",
+        "seductive smile":           "요염한 미소",
+        "half-closed eyes, smile":   "실눈 미소",
+        "parted lips":               "입 살짝 벌림",
+        "licking lips":              "입술 핥기",
+        "sultry gaze":               "끈적한 시선",
+        "half-closed eyes":          "반쯤 감은 눈",
+        "smile, tongue":             "혀와 미소",
+        "mysterious smile":          "신비로운 미소",
+        "eyes closed, smile":        "눈 감고 미소"
+      },
+      poses: {
+        "hand on own cheek":         "뺨에 손",
+        "finger to mouth":           "손가락을 입술에",
+        "looking at viewer, from side":"옆에서 바라봄",
+        "hand up":                   "손 올림",
+        "hair flip":                 "머리 쓸어넘김",
+        "reclining":                 "비스듬히 누움",
+        "hand on chin":              "턱 괴기",
+        "covering mouth with fan":   "부채로 입 가림",
+        "twirling hair":             "머리카락 꼬기",
+        "crossed legs, sitting":     "다리 꼬고 앉기",
+        "leaning forward":           "앞으로 기울이기"
+      }
+    },
+    cheeky: {
+      ko: "장난스러운",
+      traits: {
+        "cheeky":      "장난꾸러기",
+        "mischievous": "짓궂음",
+        "teasing":     "놀리기 좋아함",
+        "sly":         "꾀돌이",
+        "playful":     "장난기",
+        "witty":       "재치있음",
+        "impish":      "개구쟁이",
+        "provocative": "도발적"
+      },
+      expressions: {
+        "tongue out":                "혀 내밀기",
+        "wink, tongue out":          "윙크 + 혀",
+        "grin":                      "싱글 웃음",
+        "smug":                      "의기양양",
+        "one eye closed":            "한쪽 눈 감기",
+        ":p":                        "메롱 표정",
+        "evil grin":                 "짓궂은 미소",
+        "teasing smile":             "놀리는 미소",
+        "wink, smile":               "윙크 미소",
+        "smirk, closed eyes":        "눈 감고 씩 웃음"
+      },
+      poses: {
+        "arms behind back":          "뒷짐",
+        "leaning forward":           "앞으로 기울이기",
+        "peace sign":                "피스 사인",
+        "finger gun":                "손가락 총",
+        "pointing at self":          "자기 가리키기",
+        "hands behind head":         "뒤통수 깍지",
+        "bent over":                 "몸 숙이기",
+        "one hand on hip":           "한 손 허리",
+        "poking cheek":              "뺨 찌르기",
+        "hands on knees":            "무릎에 손",
+        "shrugging":                 "어깨 으쓱"
+      }
+    },
+    serious: {
+      ko: "진지하고 엄격한",
+      traits: {
+        "serious":     "진지함",
+        "disciplined": "규율적",
+        "strict":      "엄격함",
+        "dutiful":     "성실함",
+        "focused":     "집중함",
+        "reserved":    "절제됨",
+        "dedicated":   "헌신적",
+        "diligent":    "근면함"
+      },
+      expressions: {
+        "serious":                   "진지함",
+        "expressionless":            "무표정",
+        "closed mouth":              "다문 입",
+        "stern":                     "엄숙함",
+        "narrowed eyes":             "가늘게 뜬 눈",
+        "frown":                     "찡그림",
+        "determined":                "결연함",
+        "sharp eyes":                "날카로운 눈",
+        "focused expression":        "집중한 표정",
+        "steady gaze":               "흔들림 없는 시선"
+      },
+      poses: {
+        "standing":                  "정자세",
+        "looking at viewer":         "정면 응시",
+        "arms at sides":             "차렷",
+        "holding":                   "무언가 들고 있음",
+        "from front":                "정면",
+        "arms behind back":          "양손 뒷짐",
+        "saluting":                  "경례",
+        "reading book":              "책 읽기",
+        "holding sword":             "검 들기",
+        "at attention":              "부동자세",
+        "hand on own chin":          "턱에 손"
+      }
+    },
+    melancholic: {
+      ko: "우울하고 차분한",
+      traits: {
+        "melancholic": "우울함",
+        "pensive":     "사색적",
+        "lonely":      "외로움",
+        "wistful":     "애수 어린",
+        "quiet":       "말수 적음",
+        "thoughtful":  "생각이 많음",
+        "introspective":"내면적",
+        "nostalgic":   "향수에 젖은"
+      },
+      expressions: {
+        "sad":                       "슬픔",
+        "downcast eyes":             "내리깐 눈",
+        "looking away":              "시선 돌림",
+        "empty eyes":                "공허한 눈",
+        "frown":                     "입꼬리 내림",
+        "teary eyes":                "눈물 맺힘",
+        "tears":                     "눈물 흐름",
+        "parted lips, sad":          "입 살짝 벌린 슬픔",
+        "closed eyes":               "눈 감기",
+        "expressionless, pale":      "핏기 없는 무표정"
+      },
+      poses: {
+        "looking up":                "올려다봄",
+        "looking outside":           "창밖 보기",
+        "sitting, knees up":         "무릎 끌어안음",
+        "hand on own cheek":         "손으로 뺨 받치기",
+        "arms crossed":              "팔짱",
+        "hugging own knees":         "무릎 감싸안기",
+        "head down":                 "고개 숙이기",
+        "sitting alone":             "홀로 앉기",
+        "looking at hand":           "손 바라보기",
+        "leaning on window":         "창에 기대기",
+        "staring into space":        "허공 응시"
+      }
+    },
+    kuudere: {
+      ko: "무심한 츤데레",
+      traits: {
+        "kuudere":     "쿠데레",
+        "stoic":       "무덤덤",
+        "blunt":       "직설적",
+        "tsundere":    "츤데레",
+        "reluctant":   "마지못해",
+        "distant":     "거리감",
+        "standoffish": "쌀쌀맞음",
+        "grumpy":      "뾰로통함"
+      },
+      expressions: {
+        "frown":                     "살짝 찡그림",
+        "pout":                      "삐죽",
+        "blush, frown":              "홍조 + 찡그림",
+        "looking away, blush":       "시선 피하며 홍조",
+        "annoyed":                   "짜증",
+        "blush, pout":               "홍조 + 삐죽",
+        "expressionless, blush":     "무표정 홍조",
+        "half-closed eyes, frown":   "실눈 찡그림",
+        "closed mouth, blush":       "입 다문 홍조",
+        "sulking":                   "삐침"
+      },
+      poses: {
+        "crossed arms":              "팔짱",
+        "looking away":              "외면",
+        "hand on own hip, looking away":"손 허리, 시선 외면",
+        "pouting":                   "삐친 자세",
+        "turning head":              "고개 돌림",
+        "arms crossed, pout":        "팔짱 + 삐죽",
+        "hand on own arm":           "자기 팔 잡기",
+        "back to viewer":            "뒤돌아선 자세",
+        "hiding behind object":      "뭔가 뒤에 숨기",
+        "hands behind back, looking away":"뒷짐 + 외면",
+        "glancing sideways":         "곁눈질"
+      }
+    }
+  },
+
+  // 액세서리 (단일 아이템)
+  accessory: {
+    "glasses":              "안경",
+    "round eyewear":         "둥근 안경",
+    "sunglasses":           "선글라스",
+    "earrings":             "귀걸이",
+    "stud earrings":        "스터드 귀걸이",
+    "hoop earrings":        "후프 귀걸이",
+    "choker":               "초커",
+    "black choker":         "검은 초커",
+    "necklace":             "목걸이",
+    "pendant":              "펜던트",
+    "ribbon":               "리본",
+    "hair ribbon":          "머리 리본",
+    "hair bow":             "머리 나비 리본",
+    "hairband":             "헤어밴드",
+    "hair ornament":        "머리장식",
+    "hairclip":             "머리핀",
+    "flower in hair":       "머리에 꽃",
+    "beret":                "베레모",
+    "cap":                  "캡 모자",
+    "beanie":               "비니",
+    "sun hat":              "햇모자",
+    "witch hat":            "마녀 모자",
+    "headphones":           "헤드폰",
+    "earphones":            "이어폰",
+    "scarf":                "스카프",
+    "bracelet":             "팔찌",
+    "wristwatch":           "손목시계",
+    "gloves":               "장갑",
+    "fingerless gloves":    "핑거리스 장갑",
+    "bandaid on face":      "얼굴에 반창고",
+    "eyepatch":             "안대",
+    "mask":                 "마스크",
+    "headphones around neck":"목에 헤드폰"
+  },
+
+  // 특수 디테일 (얼굴/몸의 특징)
+  detail: {
+    "mole under eye":       "눈밑 점",
+    "mole on cheek":        "뺨에 점",
+    "mole under mouth":     "입가 점",
+    "mole on neck":         "목에 점",
+    "freckles":             "주근깨",
+    "scar on face":         "얼굴 흉터",
+    "scar across eye":      "눈을 가로지르는 흉터",
+    "scar on cheek":        "뺨의 흉터",
+    "ear piercing":         "귀 피어싱",
+    "lip piercing":         "입술 피어싱",
+    "eyebrow piercing":     "눈썹 피어싱",
+    "tattoo":               "타투",
+    "arm tattoo":           "팔 타투",
+    "neck tattoo":          "목 타투",
+    "facial mark":           "얼굴 문양",
+    "eyeshadow":            "아이섀도",
+    "red lips":             "빨간 입술",
+    "lipstick":             "립스틱",
+    "eyeliner":             "아이라이너",
+    "long eyelashes":       "긴 속눈썹",
+    "thick eyebrows":       "두꺼운 눈썹",
+    "small fangs":          "작은 덧니",
+    "pointy ears":          "뾰족한 귀"
+  },
+
+  // 구도/샷
+  composition: {
+    "portrait":              "초상화 (얼굴 위주)",
+    "close-up":              "클로즈업",
+    "face focus":            "얼굴 포커스",
+    "upper body":            "상반신",
+    "cowboy shot":           "허벅지 위",
+    "full body":             "전신",
+    "from above":            "위에서 내려다 보는 시점",
+    "from below":            "아래에서 올려다 보는 시점",
+    "from side":             "옆모습",
+    "from behind":           "뒷모습",
+    "dutch angle":           "더치 앵글",
+    "looking at viewer":     "정면 응시",
+    "looking to the side":   "옆을 봄",
+    "three-quarter view":    "3/4 뷰"
+  }
+};
+
+const pick = (obj) => {
+  const keys = Object.keys(obj);
+  return keys[Math.floor(Math.random() * keys.length)];
+};
+// 현재 머리 길이 level보다 작거나 같은 minLevel을 가진 항목만 필터링해서 뽑기
+const pickByMinLevel = (obj, currentLevel) => {
+  const validKeys = Object.keys(obj).filter(k => obj[k].minLevel <= currentLevel);
+  return validKeys[Math.floor(Math.random() * validKeys.length)];
+};
+const getVal = (id) => document.getElementById(id).value;
+const resolve = (selected, dataObj) => selected === "random" ? pick(dataObj) : selected;
+
+function makeSid() {
+  const chars = "0123456789ABCDEF";
+  let id = "";
+  for (let i = 0; i < 6; i++) id += chars[Math.floor(Math.random() * 16)];
+  return id;
+}
+document.getElementById("session").textContent = "SID · " + makeSid();
+
+// ============================================
+// HISTORY SYSTEM
+// ============================================
+const history = [];      // 생성된 페르소나 배열
+let currentIdx = -1;     // 현재 보고 있는 인덱스
+
+function generate() {
+  const genderKey  = resolve(getVal("opt-gender"), DATA.gender);
+  const speciesKey = resolve(getVal("opt-species"), DATA.species);
+  const skinKey    = resolve(getVal("opt-skin"), DATA.skin);
+  const buildKey   = resolve(getVal("opt-build"), DATA.build);
+  const outfitKey  = resolve(getVal("opt-outfit"), DATA.outfit);
+
+  // 수인이면 세부 동물 추가 추출
+  let beastkinAnimalKey = null;
+  if (speciesKey === "beastkin") {
+    beastkinAnimalKey = pick(DATA.beastkinAnimal);
+  }
+
+  const hairColorKey  = pick(DATA.hairColor);
+  const hairLengthKey = pick(DATA.hairLength);
+  const currentLevel  = DATA.hairLength[hairLengthKey].level;
+  const hairStyleKey  = pickByMinLevel(DATA.hairStyle, currentLevel);
+  const bangsKey      = pickByMinLevel(DATA.bangs, currentLevel);
+  const eyeShapeKey   = pick(DATA.eyeShape);
+  const eyeColorKey   = pick(DATA.eyeColor);
+  const incAge = document.getElementById("inc-age").checked;
+  const ageKey = incAge ? pick(DATA.ageTag) : "adult";
+
+  // 부분염색 (15% 확률): 메인 머리색 + 다른 색 포인트
+  // "{color1}, {color2} hair, streaked hair" 형태의 조합
+  let streakedHair = null;
+  if (Math.random() < 0.15) {
+    // 메인 색과 다른 색 하나 더 고르기
+    const allColors = Object.keys(DATA.hairColor).filter(c => c !== "gradient hair");
+    const shuffled = [...allColors].sort(() => Math.random() - 0.5);
+    const main = shuffled[0];
+    const accent = shuffled.find(c => c !== main);
+    streakedHair = {
+      main,
+      accent,
+      mainKo: DATA.hairColor[main],
+      accentKo: DATA.hairColor[accent]
+    };
+  }
+
+  // 오드아이 (10% 확률): 좌우 다른 색
+  let heterochromia = null;
+  if (Math.random() < 0.10) {
+    const allEyes = Object.keys(DATA.eyeColor);
+    const shuffled = [...allEyes].sort(() => Math.random() - 0.5);
+    const left = shuffled[0].replace(" eyes", "");
+    const right = shuffled.find(c => c !== shuffled[0]).replace(" eyes", "");
+    heterochromia = {
+      left, right,
+      leftKo: DATA.eyeColor[left + " eyes"],
+      rightKo: DATA.eyeColor[right + " eyes"]
+    };
+  }
+
+  const includeBreast = genderKey === "female" || genderKey === "androgynous";
+  const breastKey = includeBreast ? pick(DATA.breast) : null;
+
+  // 체크박스 상태 확인
+  const incPers = document.getElementById("inc-personality").checked;
+  const incExpr = document.getElementById("inc-expression").checked;
+  const incPose = document.getElementById("inc-pose").checked;
+  const incAcc  = document.getElementById("inc-accessory").checked;
+  const incDet  = document.getElementById("inc-detail").checked;
+  const incComp = document.getElementById("inc-composition").checked;
+
+  // 액세서리 (50% 확률로 나옴, 켜져있을 때만)
+  let accessory = null;
+  if (incAcc && Math.random() < 0.7) {
+    const accKey = pick(DATA.accessory);
+    accessory = { key: accKey, ko: DATA.accessory[accKey] };
+  }
+
+  // 특수 디테일 (켜져있으면 항상 하나 나옴)
+  let detail = null;
+  if (incDet) {
+    const detKey = pick(DATA.detail);
+    detail = { key: detKey, ko: DATA.detail[detKey] };
+  }
+
+  // 구도
+  let composition = null;
+  if (incComp) {
+    const compKey = pick(DATA.composition);
+    composition = { key: compKey, ko: DATA.composition[compKey] };
+  }
+
+  // 하나라도 체크되어 있으면 아키타입을 하나 뽑음
+  let archetypeKey = null;
+  let personality = null;   // { koList: [...], tagList: [...] }
+  let expression  = null;   // { ko, key }
+  let pose        = null;   // { ko, key }
+
+  if (incPers || incExpr || incPose) {
+    archetypeKey = pick(DATA.archetype);
+    const arch = DATA.archetype[archetypeKey];
+
+    if (incPers) {
+      // 성격 키워드 2~3개 랜덤 추출 (중복 없이)
+      const traitKeys = Object.keys(arch.traits);
+      const n = 2 + Math.floor(Math.random() * 2); // 2 or 3
+      const shuffled = [...traitKeys].sort(() => Math.random() - 0.5);
+      const picked = shuffled.slice(0, Math.min(n, traitKeys.length));
+      personality = {
+        keys: picked,
+        koList: picked.map(k => arch.traits[k])
+      };
+    }
+
+    if (incExpr) {
+      const exprKey = pick(arch.expressions);
+      expression = { key: exprKey, ko: arch.expressions[exprKey] };
+    }
+
+    if (incPose) {
+      const poseKey = pick(arch.poses);
+      pose = { key: poseKey, ko: arch.poses[poseKey] };
+    }
+  }
+
+  const tags = [];
+  tags.push(DATA.gender[genderKey].tag);
+  tags.push("solo");
+  DATA.species[speciesKey].tags.forEach(t => tags.push(t));
+  if (beastkinAnimalKey) {
+    DATA.beastkinAnimal[beastkinAnimalKey].tags.forEach(t => { if (!tags.includes(t)) tags.push(t); });
+  }
+  tags.push(ageKey);
+
+  // 머리색: 부분염색이면 두 색 + streaked hair, 아니면 단일 색
+  if (streakedHair) {
+    tags.push(streakedHair.main);
+    tags.push(streakedHair.accent);
+    tags.push("streaked hair");
+    tags.push("multicolored hair");
+  } else {
+    tags.push(hairColorKey);
+  }
+  tags.push(hairLengthKey);
+  tags.push(hairStyleKey);
+  tags.push(bangsKey);
+
+  // 눈: 오드아이이면 좌우 다른 색 + heterochromia, 아니면 단일 색
+  tags.push(eyeShapeKey);
+  if (heterochromia) {
+    tags.push("heterochromia");
+    tags.push(heterochromia.left + " eyes");
+    tags.push(heterochromia.right + " eyes");
+  } else {
+    tags.push(eyeColorKey);
+  }
+  if (skinKey && DATA.skin[skinKey] && !tags.includes(skinKey)) tags.push(skinKey);
+  DATA.build[buildKey].tags.forEach(t => { if (!tags.includes(t)) tags.push(t); });
+  if (breastKey) tags.push(breastKey);
+  DATA.outfit[outfitKey].tags.forEach(t => { if (!tags.includes(t)) tags.push(t); });
+
+  if (accessory) {
+    if (!tags.includes(accessory.key)) tags.push(accessory.key);
+  }
+  if (detail) {
+    if (!tags.includes(detail.key)) tags.push(detail.key);
+  }
+  if (composition) {
+    if (!tags.includes(composition.key)) tags.push(composition.key);
+  }
+
+  // 성격은 danbooru 태그로 잘 안쓰이는 경우가 많아서 프롬프트에만 넣을지 제외
+  // → 여기서는 성격 중 danbooru에 있는 것들만 안전하게 포함 (안전을 위해 제외)
+  // 표정/포즈는 태그로 실제 쓰이니까 포함
+  if (expression) {
+    expression.key.split(", ").forEach(t => { if (!tags.includes(t)) tags.push(t); });
+  }
+  if (pose) {
+    pose.key.split(", ").forEach(t => { if (!tags.includes(t)) tags.push(t); });
+  }
+
+  const uniqueTags = [...new Set(tags)];
+
+  const persona = {
+    gender:     { key: genderKey,  ko: DATA.gender[genderKey].ko, tag: DATA.gender[genderKey].tag },
+    species: beastkinAnimalKey
+      ? { key: `beastkin (${beastkinAnimalKey})`,
+          ko: `수인 (${DATA.beastkinAnimal[beastkinAnimalKey].ko})` }
+      : { key: speciesKey, ko: DATA.species[speciesKey].ko },
+    skin:       { key: skinKey,    ko: DATA.skin[skinKey] },
+    build:      { key: buildKey,   ko: DATA.build[buildKey].ko },
+    outfit:     { key: outfitKey,  ko: DATA.outfit[outfitKey].ko },
+    hairColor:  streakedHair
+      ? { key: `${streakedHair.main} + ${streakedHair.accent}, streaked`,
+          ko: `${streakedHair.mainKo} + ${streakedHair.accentKo} (부분염색)` }
+      : { key: hairColorKey, ko: DATA.hairColor[hairColorKey] },
+    hairLength: { key: hairLengthKey, ko: DATA.hairLength[hairLengthKey].ko },
+    hairStyle:  { key: hairStyleKey,  ko: DATA.hairStyle[hairStyleKey].ko },
+    bangs:      { key: bangsKey,      ko: DATA.bangs[bangsKey].ko },
+    eyeShape:   { key: eyeShapeKey,   ko: DATA.eyeShape[eyeShapeKey] },
+    eyeColor:   heterochromia
+      ? { key: `${heterochromia.left}/${heterochromia.right}, heterochromia`,
+          ko: `왼쪽 ${heterochromia.leftKo} + 오른쪽 ${heterochromia.rightKo} (오드아이)` }
+      : { key: eyeColorKey, ko: DATA.eyeColor[eyeColorKey] },
+    age:        { key: ageKey, ko: DATA.ageTag[ageKey], included: incAge },
+    breast: breastKey ? { key: breastKey, ko: DATA.breast[breastKey] } : null,
+    archetype: archetypeKey ? { key: archetypeKey, ko: DATA.archetype[archetypeKey].ko } : null,
+    personality,
+    expression,
+    pose,
+    accessory,
+    detail,
+    composition,
+    tags: uniqueTags
+  };
+
+  history.push(persona);
+  currentIdx = history.length - 1;
+  render();
+}
+
+function navigate(direction) {
+  const newIdx = currentIdx + direction;
+  if (newIdx < 0 || newIdx >= history.length) return;
+  currentIdx = newIdx;
+  render();
+}
+
+function render() {
+  if (currentIdx < 0 || !history[currentIdx]) return;
+  const p = history[currentIdx];
+
+  const traits = [
+    ["성별",    p.gender.ko,     p.gender.tag],
+    ["종족",    p.species.ko,    p.species.key],
+    ["피부",    p.skin.ko,       p.skin.key],
+    ["체형",    p.build.ko,      p.build.key],
+    ["머리색",  p.hairColor.ko,  p.hairColor.key],
+    ["머리길이", p.hairLength.ko, p.hairLength.key],
+    ["머리모양", p.hairStyle.ko,  p.hairStyle.key],
+    ["앞머리",  p.bangs.ko,      p.bangs.key],
+    ["눈모양",  p.eyeShape.ko,   p.eyeShape.key],
+    ["눈동자",  p.eyeColor.ko,   p.eyeColor.key],
+    ["의상",    p.outfit.ko,     p.outfit.key],
+  ];
+  if (p.breast) traits.push(["가슴", p.breast.ko, p.breast.key]);
+  if (p.age.included) traits.push(["나이", p.age.ko, p.age.key]);
+  if (p.accessory)   traits.push(["액세서리", p.accessory.ko, p.accessory.key]);
+  if (p.detail)      traits.push(["디테일", p.detail.ko, p.detail.key]);
+  if (p.composition) traits.push(["구도", p.composition.ko, p.composition.key]);
+  if (p.personality) traits.push(["성격", p.personality.koList.join(", "), p.personality.keys.join(", ")]);
+  if (p.expression)  traits.push(["표정", p.expression.ko, p.expression.key]);
+  if (p.pose)        traits.push(["포즈", p.pose.ko, p.pose.key]);
+
+  const traitsHTML = traits.map(([label, ko, tag]) => `
+    <div class="trait">
+      <div class="trait-label">${label}</div>
+      <div class="trait-value">
+        ${ko}
+        <span class="en">${tag}</span>
+      </div>
+    </div>
+  `).join("");
+
+  const tagString = p.tags.join(", ");
+  const tagsHTML = p.tags.map(t => `<span class="tag">${t}</span>`).join(" ");
+
+  const prevDisabled = currentIdx <= 0 ? "disabled" : "";
+  const nextDisabled = currentIdx >= history.length - 1 ? "disabled" : "";
+  const personaNum = String(currentIdx + 1).padStart(3, "0");
+
+  // 삼각형 아이콘 (SVG)
+  const triLeft  = `<svg width="8" height="10" viewBox="0 0 8 10" fill="currentColor"><path d="M7 0L0 5L7 10V0Z"/></svg>`;
+  const triRight = `<svg width="8" height="10" viewBox="0 0 8 10" fill="currentColor"><path d="M1 0L8 5L1 10V0Z"/></svg>`;
+
+  document.getElementById("result").innerHTML = `
+    <div class="persona">
+      <div class="persona-header">
+        <div class="persona-id">PERSONA · ${personaNum}</div>
+        <div class="pager">
+          <button class="pager-btn" id="pager-prev" ${prevDisabled} aria-label="이전">${triLeft}</button>
+          <div class="pager-position">
+            ${currentIdx + 1}<span class="sep">/</span>${history.length}
+          </div>
+          <button class="pager-btn" id="pager-next" ${nextDisabled} aria-label="다음">${triRight}</button>
+        </div>
+      </div>
+      <div class="traits">${traitsHTML}</div>
+      <div class="tag-block">
+        <div class="tag-head">
+          <div class="tag-title">Danbooru Tags</div>
+          <button class="copy-btn" id="copy-btn">Copy</button>
+        </div>
+        <div class="tag-output">${tagsHTML}</div>
+      </div>
+    </div>
+  `;
+
+  // 페이지네이션 이벤트
+  const prevBtn = document.getElementById("pager-prev");
+  const nextBtn = document.getElementById("pager-next");
+  if (!prevBtn.disabled) prevBtn.addEventListener("click", () => navigate(-1));
+  if (!nextBtn.disabled) nextBtn.addEventListener("click", () => navigate(1));
+
+  // 복사 버튼
+  document.getElementById("copy-btn").addEventListener("click", () => {
+    navigator.clipboard.writeText(tagString).then(() => {
+      const btn = document.getElementById("copy-btn");
+      btn.textContent = "Copied";
+      btn.classList.add("copied");
+      setTimeout(() => {
+        btn.textContent = "Copy";
+        btn.classList.remove("copied");
+      }, 1400);
+    });
+  });
+}
+
+document.getElementById("summon").addEventListener("click", generate);
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "SELECT" || e.target.tagName === "INPUT") return;
+  if (e.code === "Space" && e.target.tagName !== "BUTTON") {
+    e.preventDefault();
+    generate();
+  } else if (e.code === "ArrowLeft") {
+    e.preventDefault();
+    navigate(-1);
+  } else if (e.code === "ArrowRight") {
+    e.preventDefault();
+    navigate(1);
+  }
+});
+</script>
+</body>
+</html>
