@@ -353,6 +353,8 @@
   .trait-value {
     font-size: 14px;
     color: var(--ink);
+    word-break: keep-all;
+    line-height: 1.4;
   }
   .trait-value .en {
     display: block;
@@ -500,60 +502,22 @@
       </div>
 
       <div class="field">
-        <label>의상<span class="en">outfit</span></label>
+        <label>의상<span class="en">outfit category</span></label>
         <select id="opt-outfit">
           <option value="random">Random</option>
-          <optgroup label="─ 일상 / 모던 ─">
-            <option value="casual">캐주얼</option>
-            <option value="hoodie">후드티</option>
-            <option value="oversized sweater">오버사이즈 니트</option>
-            <option value="t-shirt and jeans">티셔츠 & 진</option>
-            <option value="sundress">여름 원피스</option>
-            <option value="streetwear">스트리트웨어</option>
-          </optgroup>
-          <optgroup label="─ 교복 / 유니폼 ─">
-            <option value="school uniform">교복</option>
-            <option value="blazer uniform">블레이저 교복</option>
-            <option value="gym uniform">체육복</option>
-            <option value="nurse">간호복</option>
-            <option value="police">경찰복</option>
-            <option value="military">군복</option>
-          </optgroup>
-          <optgroup label="─ 정장 / 포멀 ─">
-            <option value="business suit">정장</option>
-            <option value="office lady">오피스룩</option>
-            <option value="evening dress">이브닝 드레스</option>
-            <option value="wedding dress">웨딩드레스</option>
-          </optgroup>
-          <optgroup label="─ 전통 / 민속 ─">
-            <option value="kimono">기모노</option>
-            <option value="yukata">유카타</option>
-            <option value="hanfu">한푸</option>
-            <option value="hanbok">한복</option>
-            <option value="china dress">치파오</option>
-          </optgroup>
-          <optgroup label="─ 판타지 ─">
-            <option value="fantasy armor">판타지 갑옷</option>
-            <option value="knight armor">기사 풀플레이트</option>
-            <option value="mage robe">마법사 로브</option>
-            <option value="witch">마녀</option>
-            <option value="priestess">무녀</option>
-            <option value="ninja">닌자</option>
-            <option value="samurai">사무라이</option>
-            <option value="pirate">해적</option>
-          </optgroup>
-          <optgroup label="─ 서브컬처 ─">
-            <option value="maid">메이드복</option>
-            <option value="gothic lolita">고딕 로리타</option>
-            <option value="idol costume">아이돌 의상</option>
-            <option value="cheerleader">치어리더</option>
-          </optgroup>
-          <optgroup label="─ 기타 ─">
-            <option value="swimsuit">수영복</option>
-            <option value="bikini">비키니</option>
-            <option value="winter coat">겨울 코트</option>
-            <option value="leather jacket">라이더 재킷</option>
-          </optgroup>
+          <option value="daily">일상 / 캐주얼</option>
+          <option value="formal">포멀 / 정장</option>
+          <option value="school">교복</option>
+          <option value="sport">스포츠</option>
+          <option value="fantasy">판타지</option>
+          <option value="traditional">전통</option>
+          <option value="swimwear">수영복</option>
+          <option value="winter">겨울</option>
+          <option value="elegant">엘레강트 / 드레스</option>
+          <option value="dark">다크 / 스트리트</option>
+          <option value="gothic">고딕</option>
+          <option value="celestial">신성한</option>
+          <option value="casual">편한 / 홈웨어</option>
         </select>
       </div>
 
@@ -617,16 +581,17 @@ const DATA = {
     androgynous:  { ko: "중성",  tag: "1other, androgynous" }
   },
   species: {
-    human:      { ko: "인간",            tags: [] },
-    elf:        { ko: "엘프",            tags: ["elf", "pointy ears"] },
-    "dark elf": { ko: "다크 엘프",       tags: ["dark elf", "pointy ears"] },
-    beastkin:   { ko: "수인",            tags: [] }, // 아래 beastkinAnimal에서 세부 결정
-    dragon:     { ko: "드래곤",          tags: ["dragon horns", "dragon tail", "scales", "slit pupils"] },
-    demon:      { ko: "마족",            tags: ["demon horns", "demon tail", "pointy ears"] },
-    angel:      { ko: "천사",            tags: ["angel wings", "halo"] },
-    vampire:    { ko: "뱀파이어",        tags: ["vampire", "fangs", "pale skin"] },
-    mermaid:    { ko: "인어",            tags: ["mermaid", "monster girl"] },
-    ghost:      { ko: "유령",            tags: ["ghost", "transparent"] }
+    // compat: 이 종족이 입을 수 있는 코디 카테고리
+    human:      { ko: "인간",       tags: [],                                                  compat: ["daily", "formal", "school", "sport", "fantasy", "traditional", "swimwear", "winter"] },
+    elf:        { ko: "엘프",       tags: ["elf", "pointy ears"],                              compat: ["daily", "formal", "fantasy", "traditional", "winter", "elegant"] },
+    "dark elf": { ko: "다크 엘프",  tags: ["dark elf", "pointy ears"],                          compat: ["daily", "fantasy", "dark", "elegant", "winter"] },
+    beastkin:   { ko: "수인",       tags: [],                                                  compat: ["daily", "school", "sport", "fantasy", "traditional", "swimwear", "winter", "casual"] },
+    dragon:     { ko: "드래곤",     tags: ["dragon horns", "dragon tail", "scales", "slit pupils"], compat: ["fantasy", "dark", "elegant", "traditional"] },
+    demon:      { ko: "마족",       tags: ["demon horns", "demon tail", "pointy ears"],         compat: ["daily", "formal", "fantasy", "dark", "elegant", "gothic"] },
+    angel:      { ko: "천사",       tags: ["angel wings", "halo"],                             compat: ["daily", "formal", "fantasy", "elegant", "celestial", "traditional"] },
+    vampire:    { ko: "뱀파이어",   tags: ["vampire", "fangs", "pale skin"],                    compat: ["daily", "formal", "dark", "gothic", "elegant", "winter"] },
+    mermaid:    { ko: "인어",       tags: ["mermaid", "fish tail", "scales", "fins"],          compat: ["mermaid_only"] },
+    ghost:      { ko: "유령",       tags: ["ghost", "transparent"],                            compat: ["daily", "formal", "school", "sport", "fantasy", "traditional", "swimwear", "winter", "casual", "elegant", "dark", "gothic", "ghost_safe"] }
   },
 
   // 수인 세부 동물 (species가 beastkin일 때만 사용)
@@ -782,56 +747,393 @@ const DATA = {
     "mature female": "성숙함"
   },
   outfit: {
-    // 일상 / 모던
-    "casual":              { ko: "캐주얼",         tags: ["casual", "shirt", "pants"] },
-    "hoodie":              { ko: "후드티",         tags: ["hoodie", "long sleeves"] },
-    "oversized sweater":   { ko: "오버사이즈 니트", tags: ["sweater", "oversized clothes"] },
-    "t-shirt and jeans":   { ko: "티셔츠 & 진",    tags: ["t-shirt", "denim", "jeans"] },
-    "sundress":            { ko: "여름 원피스",    tags: ["sundress", "summer"] },
-    "streetwear":          { ko: "스트리트웨어",   tags: ["streetwear", "jacket", "sneakers"] },
+    // ──────── 일상 / 모던 ────────
+    "베이지 오버사이즈 니트 + 체크 스커트": {
+      tags: ["oversized sweater", "beige sweater", "plaid skirt", "thighhighs"],
+      compat: ["daily", "casual", "winter"]
+    },
+    "화이트 셔츠 + 하이웨스트 데님": {
+      tags: ["white shirt", "collared shirt", "high-waist jeans", "tucked-in shirt"],
+      compat: ["daily", "casual"]
+    },
+    "블랙 크롭탑 + 와이드 카고 팬츠": {
+      tags: ["black crop top", "cargo pants", "wide pants", "midriff"],
+      compat: ["daily", "casual"]
+    },
+    "파스텔 후디 + 플리츠 미니 스커트": {
+      tags: ["hoodie", "pastel color", "pleated skirt", "thighhighs"],
+      compat: ["daily", "casual"]
+    },
+    "옅은 핑크 니트 카디건 + 하얀 원피스": {
+      tags: ["cardigan", "pink cardigan", "white dress", "frills"],
+      compat: ["daily", "elegant", "mermaid_only"]
+    },
+    "네이비 세일러 칼라 원피스": {
+      tags: ["sailor dress", "navy blue dress", "white collar", "ribbon"],
+      compat: ["daily", "elegant", "mermaid_only"]
+    },
+    "오렌지 탱크탑 + 데님 쇼츠": {
+      tags: ["tank top", "orange shirt", "denim shorts", "short shorts"],
+      compat: ["daily", "casual", "sport"]
+    },
+    "회색 오버사이즈 티셔츠 + 자전거 반바지": {
+      tags: ["oversized shirt", "grey shirt", "bike shorts"],
+      compat: ["daily", "casual", "sport"]
+    },
+    "체크 셔츠 + 블랙 스키니 진": {
+      tags: ["plaid shirt", "flannel shirt", "black pants", "skinny jeans"],
+      compat: ["daily", "casual"]
+    },
+    "크림 터틀넥 + 롱 울 스커트": {
+      tags: ["turtleneck", "white sweater", "long skirt", "wool skirt"],
+      compat: ["daily", "elegant", "winter"]
+    },
+    "라벤더 파자마 세트": {
+      tags: ["pajamas", "purple pajamas", "long sleeves", "button-up"],
+      compat: ["casual"]
+    },
+    "옐로우 우비 + 장화": {
+      tags: ["raincoat", "yellow raincoat", "rain boots", "hood up"],
+      compat: ["daily", "casual"]
+    },
+    "베레모 + 프렌치 스트라이프 티": {
+      tags: ["beret", "striped shirt", "horizontal stripes", "high-waist skirt"],
+      compat: ["daily", "elegant"]
+    },
+    "데님 오버롤 + 화이트 티셔츠": {
+      tags: ["overalls", "denim overalls", "white shirt", "t-shirt"],
+      compat: ["daily", "casual"]
+    },
+    "카키 밀리터리 재킷 + 블랙 터틀넥": {
+      tags: ["military jacket", "khaki jacket", "black turtleneck", "cargo pants"],
+      compat: ["daily", "winter"]
+    },
 
-    // 교복 / 유니폼
-    "school uniform":      { ko: "교복",           tags: ["school uniform", "serafuku", "pleated skirt"] },
-    "blazer uniform":      { ko: "블레이저 교복",  tags: ["school uniform", "blazer", "necktie", "pleated skirt"] },
-    "gym uniform":         { ko: "체육복",         tags: ["gym uniform"] },
-    "nurse":               { ko: "간호복",         tags: ["nurse", "nurse cap"] },
-    "police":              { ko: "경찰복",         tags: ["police uniform"] },
-    "military":            { ko: "군복",           tags: ["military uniform", "military"] },
+    // ──────── 스트리트 / 엣지 ────────
+    "블랙 가죽 재킷 + 찢어진 청바지": {
+      tags: ["leather jacket", "black jacket", "torn jeans", "ripped jeans"],
+      compat: ["daily", "dark"]
+    },
+    "오버사이즈 그래픽 티 + 와이드 팬츠": {
+      tags: ["oversized shirt", "graphic shirt", "baggy pants", "sneakers"],
+      compat: ["daily", "casual"]
+    },
+    "테크웨어 자켓 + 유틸리티 벨트": {
+      tags: ["techwear", "cargo pants", "utility belt", "buckles"],
+      compat: ["daily", "dark"]
+    },
+    "크롭 후디 + 가죽 미니스커트": {
+      tags: ["cropped hoodie", "leather skirt", "miniskirt", "fishnets"],
+      compat: ["daily", "dark"]
+    },
+    "올블랙 터틀넥 코트 + 가죽 부츠": {
+      tags: ["long coat", "black coat", "turtleneck", "knee-high boots"],
+      compat: ["daily", "dark", "winter"]
+    },
+    "홀로그램 재킷 + 메탈릭 팬츠": {
+      tags: ["holographic", "metallic jacket", "metallic pants", "futuristic"],
+      compat: ["daily", "dark"]
+    },
 
-    // 정장 / 포멀
-    "business suit":       { ko: "정장",           tags: ["business suit", "formal", "necktie"] },
-    "office lady":         { ko: "오피스룩",       tags: ["office lady", "pencil skirt", "blouse"] },
-    "evening dress":       { ko: "이브닝 드레스",  tags: ["evening gown", "formal", "long dress"] },
-    "wedding dress":       { ko: "웨딩드레스",     tags: ["wedding dress", "veil"] },
+    // ──────── 포멀 / 오피스 ────────
+    "차콜 그레이 스리피스 정장": {
+      tags: ["business suit", "grey suit", "vest", "necktie", "dress shirt"],
+      compat: ["formal"]
+    },
+    "네이비 블레이저 + 슬랙스": {
+      tags: ["blazer", "navy blazer", "slacks", "dress shirt"],
+      compat: ["formal", "school"]
+    },
+    "화이트 블라우스 + 펜슬 스커트": {
+      tags: ["office lady", "white blouse", "pencil skirt", "black pantyhose"],
+      compat: ["formal"]
+    },
+    "베이지 트렌치 코트 + 블랙 드레스": {
+      tags: ["trench coat", "beige coat", "black dress", "stockings"],
+      compat: ["formal", "daily", "winter"]
+    },
+    "블랙 턱시도": {
+      tags: ["tuxedo", "black suit", "bowtie", "dress shirt", "formal"],
+      compat: ["formal"]
+    },
+    "와인색 벨벳 이브닝 드레스": {
+      tags: ["evening gown", "red dress", "velvet", "long dress", "backless"],
+      compat: ["formal", "elegant", "mermaid_only"]
+    },
 
-    // 전통 / 민속
-    "kimono":              { ko: "기모노",         tags: ["kimono", "japanese clothes", "obi"] },
-    "yukata":              { ko: "유카타",         tags: ["yukata", "japanese clothes"] },
-    "hanfu":               { ko: "한푸",           tags: ["hanfu", "chinese clothes"] },
-    "hanbok":              { ko: "한복",           tags: ["hanbok", "korean clothes"] },
-    "china dress":         { ko: "치파오",         tags: ["china dress", "chinese clothes"] },
+    // ──────── 교복 / 학생 ────────
+    "하얀 세일러복 + 남색 플리츠 스커트": {
+      tags: ["serafuku", "school uniform", "white shirt", "blue sailor collar", "pleated skirt"],
+      compat: ["school"]
+    },
+    "체크 교복 블레이저 + 빨간 넥타이": {
+      tags: ["school uniform", "blazer", "plaid skirt", "red necktie", "white shirt"],
+      compat: ["school"]
+    },
+    "검은 블레이저 교복 + 니삭스": {
+      tags: ["school uniform", "black blazer", "pleated skirt", "thighhighs", "loafers"],
+      compat: ["school"]
+    },
+    "카디건 교복 + 리본 타이": {
+      tags: ["school cardigan", "school uniform", "ribbon", "pleated skirt"],
+      compat: ["school"]
+    },
+    "하복 교복 (반팔 블라우스 + 스커트)": {
+      tags: ["school uniform", "short sleeves", "summer uniform", "pleated skirt"],
+      compat: ["school"]
+    },
 
-    // 판타지 / 롤플레이
-    "fantasy armor":       { ko: "판타지 갑옷",    tags: ["armor", "breastplate", "gauntlets"] },
-    "knight armor":        { ko: "기사 풀플레이트", tags: ["knight", "full armor", "plate armor"] },
-    "mage robe":           { ko: "마법사 로브",    tags: ["robe", "wizard hat", "wide sleeves"] },
-    "witch":               { ko: "마녀",           tags: ["witch", "witch hat", "cape"] },
-    "priestess":           { ko: "무녀",           tags: ["miko", "miko outfit"] },
-    "ninja":               { ko: "닌자",           tags: ["ninja", "ninja mask"] },
-    "samurai":             { ko: "사무라이",       tags: ["samurai", "hakama"] },
-    "pirate":              { ko: "해적",           tags: ["pirate", "tricorne", "pirate coat"] },
+    // ──────── 스포츠 / 운동 ────────
+    "운동복 져지 세트 (빨강)": {
+      tags: ["track suit", "red jacket", "track pants", "sneakers"],
+      compat: ["sport", "casual"]
+    },
+    "스포츠 브라 + 레깅스": {
+      tags: ["sports bra", "leggings", "midriff", "athletic"],
+      compat: ["sport"]
+    },
+    "테니스복 (하얀 스커트)": {
+      tags: ["tennis uniform", "white skirt", "visor cap", "sneakers"],
+      compat: ["sport"]
+    },
+    "요가 탑 + 하이웨스트 레깅스": {
+      tags: ["crop top", "high-waist leggings", "midriff", "athletic"],
+      compat: ["sport"]
+    },
+    "농구 유니폼 (민소매 + 반바지)": {
+      tags: ["basketball uniform", "jersey", "shorts", "sneakers"],
+      compat: ["sport"]
+    },
 
-    // 서브컬처
-    "maid":                { ko: "메이드복",       tags: ["maid", "apron", "maid headdress"] },
-    "gothic lolita":       { ko: "고딕 로리타",    tags: ["gothic lolita", "frills", "lace"] },
-    "idol costume":        { ko: "아이돌 의상",    tags: ["idol", "frills"] },
-    "cheerleader":         { ko: "치어리더",       tags: ["cheerleader", "pom pom"] },
+    // ──────── 판타지 / RPG ────────
+    "검은 후드 로브 + 은 장식": {
+      tags: ["robe", "black robe", "hood up", "silver jewelry", "wide sleeves"],
+      compat: ["fantasy", "dark"]
+    },
+    "하얀 대천사 로브 + 금빛 자수": {
+      tags: ["white robe", "gold trim", "wide sleeves", "holy"],
+      compat: ["fantasy", "celestial", "elegant", "mermaid_only"]
+    },
+    "보라색 마법사 로브 + 별 패턴": {
+      tags: ["wizard robe", "purple robe", "star print", "wizard hat"],
+      compat: ["fantasy"]
+    },
+    "은빛 풀플레이트 기사 갑옷": {
+      tags: ["knight", "full armor", "plate armor", "silver armor", "gauntlets"],
+      compat: ["fantasy"]
+    },
+    "레더 아머 + 허리 벨트 + 망토": {
+      tags: ["leather armor", "belt", "cape", "brown cape"],
+      compat: ["fantasy"]
+    },
+    "다크 나이트 블랙 아머": {
+      tags: ["black armor", "dark knight", "cape", "pauldrons"],
+      compat: ["fantasy", "dark"]
+    },
+    "엘프 궁수 복장 (초록 튜닉 + 망토)": {
+      tags: ["green tunic", "cape", "belt", "quiver", "leather boots"],
+      compat: ["fantasy"]
+    },
+    "검은 레더 도적 복장 + 후드": {
+      tags: ["rogue", "hood up", "leather jacket", "belts", "fingerless gloves"],
+      compat: ["fantasy", "dark"]
+    },
+    "실버 소서리스 드레스": {
+      tags: ["silver dress", "long dress", "flowy", "magical"],
+      compat: ["fantasy", "elegant", "celestial", "mermaid_only"]
+    },
+    "빨간 성기사 망토 + 황금 아머": {
+      tags: ["gold armor", "red cape", "paladin", "breastplate"],
+      compat: ["fantasy", "celestial"]
+    },
 
-    // 기타
-    "swimsuit":            { ko: "수영복",         tags: ["swimsuit"] },
-    "bikini":              { ko: "비키니",         tags: ["bikini"] },
-    "winter coat":         { ko: "겨울 코트",      tags: ["coat", "scarf", "winter clothes"] },
-    "leather jacket":      { ko: "라이더 재킷",    tags: ["leather jacket", "jacket"] }
+    // ──────── 전통 / 민속 ────────
+    "벚꽃 무늬 분홍 기모노": {
+      tags: ["kimono", "pink kimono", "cherry blossom print", "obi", "japanese clothes"],
+      compat: ["traditional", "mermaid_only"]
+    },
+    "검은색 후리소데 기모노": {
+      tags: ["furisode", "black kimono", "wide sleeves", "obi"],
+      compat: ["traditional", "elegant", "mermaid_only"]
+    },
+    "여름 유카타 (파랑 금붕어 무늬)": {
+      tags: ["yukata", "blue yukata", "obi", "summer"],
+      compat: ["traditional", "swimwear", "mermaid_only"]
+    },
+    "미코 (무녀) 복장": {
+      tags: ["miko", "miko outfit", "red hakama", "white kimono"],
+      compat: ["traditional", "celestial"]
+    },
+    "화려한 붉은 한복": {
+      tags: ["hanbok", "korean clothes", "red hanbok", "long skirt"],
+      compat: ["traditional", "mermaid_only"]
+    },
+    "민트색 한푸 드레스": {
+      tags: ["hanfu", "chinese clothes", "mint dress", "long sleeves"],
+      compat: ["traditional", "elegant", "mermaid_only"]
+    },
+    "빨간 치파오 + 금 자수": {
+      tags: ["china dress", "chinese clothes", "red dress", "gold trim"],
+      compat: ["traditional", "elegant", "mermaid_only"]
+    },
+
+    // ──────── 서브컬처 / 코스 ────────
+    "클래식 메이드복 (검정+흰 에이프런)": {
+      tags: ["maid", "maid outfit", "apron", "maid headdress", "frills"],
+      compat: ["daily", "elegant"]
+    },
+    "로얄 메이드복 (파랑+금 장식)": {
+      tags: ["maid", "blue dress", "gold trim", "maid headdress", "long sleeves"],
+      compat: ["elegant", "fantasy"]
+    },
+    "블랙 고딕 로리타 (리본+레이스)": {
+      tags: ["gothic lolita", "black dress", "frills", "lace", "ribbon"],
+      compat: ["gothic", "elegant", "dark", "mermaid_only"]
+    },
+    "스위트 로리타 (핑크+리본)": {
+      tags: ["sweet lolita", "pink dress", "frills", "lace", "bonnet"],
+      compat: ["gothic", "elegant", "mermaid_only"]
+    },
+    "화이트 고딕 드레스": {
+      tags: ["gothic", "white dress", "lace", "long sleeves", "ribbon"],
+      compat: ["gothic", "elegant", "celestial", "mermaid_only"]
+    },
+    "아이돌 무대의상 (프릴+리본)": {
+      tags: ["idol", "frilled dress", "ribbon", "layered skirt"],
+      compat: ["daily", "elegant"]
+    },
+    "치어리더 유니폼": {
+      tags: ["cheerleader", "cheerleader uniform", "pom pom", "pleated skirt"],
+      compat: ["school", "sport"]
+    },
+    "마녀복 (검정 원피스 + 큰 모자)": {
+      tags: ["witch", "witch hat", "black dress", "cape"],
+      compat: ["fantasy", "dark", "gothic", "mermaid_only"]
+    },
+    "닌자 복장 (흑색)": {
+      tags: ["ninja", "black clothes", "mask", "shoulder pads"],
+      compat: ["fantasy", "dark", "traditional"]
+    },
+    "사무라이 하카마 복장": {
+      tags: ["samurai", "hakama", "haori", "japanese clothes"],
+      compat: ["fantasy", "traditional"]
+    },
+    "해적 선장 코트": {
+      tags: ["pirate", "tricorne", "pirate coat", "red coat", "boots"],
+      compat: ["fantasy"]
+    },
+
+    // ──────── 수영복 ────────
+    "빨간 원피스 수영복": {
+      tags: ["one-piece swimsuit", "red swimsuit"],
+      compat: ["swimwear"]
+    },
+    "흰색 프릴 비키니": {
+      tags: ["bikini", "white bikini", "frilled bikini"],
+      compat: ["swimwear"]
+    },
+    "검은 스쿨 수영복": {
+      tags: ["school swimsuit", "black swimsuit"],
+      compat: ["swimwear", "school"]
+    },
+    "네이비 세일러 비키니": {
+      tags: ["bikini", "sailor bikini", "blue bikini"],
+      compat: ["swimwear"]
+    },
+    "하이넥 경기용 수영복": {
+      tags: ["competition swimsuit", "one-piece swimsuit", "high-neck"],
+      compat: ["swimwear", "sport"]
+    },
+
+    // ──────── 겨울 ────────
+    "머스타드 더플 코트 + 목도리": {
+      tags: ["duffel coat", "yellow coat", "scarf", "winter clothes"],
+      compat: ["winter", "daily"]
+    },
+    "흰색 퍼 후드 코트": {
+      tags: ["coat", "white coat", "fur trim", "hood", "winter clothes"],
+      compat: ["winter", "elegant"]
+    },
+    "카멜 롱 코트 + 베레모": {
+      tags: ["long coat", "brown coat", "beret", "winter clothes", "boots"],
+      compat: ["winter", "elegant", "daily"]
+    },
+    "두꺼운 니트 스웨터 + 털모자": {
+      tags: ["sweater", "knit cap", "winter clothes", "mittens"],
+      compat: ["winter", "casual"]
+    },
+
+    // ──────── 엘레강트 / 드레스 ────────
+    "보라색 실크 슬립 드레스": {
+      tags: ["slip dress", "purple dress", "silk", "backless"],
+      compat: ["elegant", "formal", "mermaid_only"]
+    },
+    "블랙 플레어 미니 드레스": {
+      tags: ["black dress", "a-line dress", "short dress", "sleeveless"],
+      compat: ["elegant", "formal", "dark"]
+    },
+    "아이보리 웨딩 드레스 + 베일": {
+      tags: ["wedding dress", "veil", "white dress", "long dress", "lace"],
+      compat: ["elegant", "formal", "celestial", "mermaid_only"]
+    },
+    "붉은 장미 이브닝 드레스 + 레이스": {
+      tags: ["evening gown", "red dress", "lace", "long dress"],
+      compat: ["elegant", "formal", "mermaid_only"]
+    },
+    "에메랄드 그린 머메이드 드레스": {
+      tags: ["mermaid dress", "green dress", "long dress", "sequins"],
+      compat: ["elegant", "formal", "mermaid_only"]
+    },
+
+    // ──────── 유니폼 / 직업 ────────
+    "간호사복 (흰색)": {
+      tags: ["nurse", "nurse cap", "white dress", "pantyhose"],
+      compat: ["daily"]
+    },
+    "경찰 제복 + 모자": {
+      tags: ["police uniform", "police hat", "black pants", "belt"],
+      compat: ["formal", "daily"]
+    },
+    "군복 (카키 + 군모)": {
+      tags: ["military uniform", "military hat", "khaki shirt", "belt"],
+      compat: ["formal", "daily"]
+    },
+    "바리스타 앞치마 복장": {
+      tags: ["apron", "brown apron", "white shirt", "cafe"],
+      compat: ["daily", "casual"]
+    },
+    "스튜어디스 유니폼": {
+      tags: ["stewardess", "pencil skirt", "neck scarf", "blazer"],
+      compat: ["formal"]
+    },
+
+    // ──────── 인어 전용 ────────
+    "조개 비키니 탑 + 비늘 꼬리": {
+      tags: ["seashell bikini top", "scales", "mermaid"],
+      compat: ["mermaid_only"]
+    },
+    "얇은 베일 상의 + 진주 장식": {
+      tags: ["veil", "pearl necklace", "scales", "mermaid"],
+      compat: ["mermaid_only"]
+    },
+    "해초 랩 상의 + 꽃 장식": {
+      tags: ["flower", "scales", "mermaid", "bare shoulders"],
+      compat: ["mermaid_only"]
+    },
+
+    // ──────── 유령 / 신비 ────────
+    "하얀 빅토리안 롱 가운": {
+      tags: ["victorian", "white dress", "long dress", "lace", "long sleeves"],
+      compat: ["ghost_safe", "gothic", "elegant"]
+    },
+    "검은 상복 롱 드레스": {
+      tags: ["black dress", "long dress", "veil", "mourning"],
+      compat: ["ghost_safe", "gothic", "dark"]
+    },
+    "얇은 흰 가운 + 흐르는 소매": {
+      tags: ["white dress", "long dress", "long sleeves", "flowy", "wide sleeves"],
+      compat: ["ghost_safe", "celestial", "elegant"]
+    }
   },
 
   // 성격 아키타입 → 어울리는 표정 & 포즈를 묶어서 저장
@@ -1185,7 +1487,7 @@ const DATA = {
     kuudere: {
       ko: "무심한 츤데레",
       traits: {
-        "kuudere":     "쿨데레",
+        "kuudere":     "쿠데레",
         "stoic":       "무덤덤",
         "blunt":       "직설적",
         "tsundere":    "츤데레",
@@ -1336,7 +1638,35 @@ function generate() {
   const speciesKey = resolve(getVal("opt-species"), DATA.species);
   const skinKey    = resolve(getVal("opt-skin"), DATA.skin);
   const buildKey   = resolve(getVal("opt-build"), DATA.build);
-  const outfitKey  = resolve(getVal("opt-outfit"), DATA.outfit);
+
+  // 의상: 종족 호환성 + 사용자 선택 카테고리 기반 필터링
+  const speciesCompat = DATA.species[speciesKey].compat;
+  const outfitCategory = getVal("opt-outfit"); // "random" or a category
+  const allOutfits = Object.keys(DATA.outfit);
+
+  const filteredOutfits = allOutfits.filter(name => {
+    const outfitCompat = DATA.outfit[name].compat;
+    // 이 의상이 현재 종족에게 허용되는지 — 겹치는 카테고리가 하나라도 있어야 함
+    const speciesOk = outfitCompat.some(c => speciesCompat.includes(c));
+    if (!speciesOk) return false;
+    // 사용자가 카테고리를 지정했으면 그 카테고리도 포함되어야 함
+    if (outfitCategory !== "random") {
+      return outfitCompat.includes(outfitCategory);
+    }
+    return true;
+  });
+
+  // 해당 종족에 맞는 코디가 하나도 없다면 fallback — 종족 기본 호환을 전부 사용
+  let outfitKey;
+  if (filteredOutfits.length > 0) {
+    outfitKey = filteredOutfits[Math.floor(Math.random() * filteredOutfits.length)];
+  } else {
+    // 사용자가 선택한 카테고리가 현재 종족과 안 맞는 경우 → 종족 기준으로만 다시 필터
+    const speciesOnly = allOutfits.filter(name => {
+      return DATA.outfit[name].compat.some(c => speciesCompat.includes(c));
+    });
+    outfitKey = speciesOnly[Math.floor(Math.random() * speciesOnly.length)];
+  }
 
   // 수인이면 세부 동물 추가 추출
   let beastkinAnimalKey = null;
@@ -1457,6 +1787,20 @@ function generate() {
   if (beastkinAnimalKey) {
     DATA.beastkinAnimal[beastkinAnimalKey].tags.forEach(t => { if (!tags.includes(t)) tags.push(t); });
   }
+
+  // 인어 성별별 추가 태그 (AI가 꼬리를 제대로 그려주도록)
+  if (speciesKey === "mermaid") {
+    if (genderKey === "female") {
+      tags.push("monster girl");
+      tags.push("lower body fish");
+    } else if (genderKey === "male") {
+      tags.push("merman");
+      tags.push("lower body fish");
+    } else {
+      tags.push("lower body fish");
+    }
+  }
+
   tags.push(ageKey);
 
   // 머리색: 부분염색이면 두 색 + streaked hair, 아니면 단일 색
@@ -1516,7 +1860,7 @@ function generate() {
       : { key: speciesKey, ko: DATA.species[speciesKey].ko },
     skin:       { key: skinKey,    ko: DATA.skin[skinKey] },
     build:      { key: buildKey,   ko: DATA.build[buildKey].ko },
-    outfit:     { key: outfitKey,  ko: DATA.outfit[outfitKey].ko },
+    outfit:     { key: outfitKey,  ko: outfitKey },
     hairColor:  streakedHair
       ? { key: `${streakedHair.main} + ${streakedHair.accent}, streaked`,
           ko: `${streakedHair.mainKo} + ${streakedHair.accentKo} (부분염색)` }
