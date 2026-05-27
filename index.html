@@ -591,7 +591,11 @@ const DATA = {
     angel:      { ko: "천사",       tags: ["angel wings", "halo"],                             compat: ["daily", "formal", "fantasy", "elegant", "celestial", "traditional"] },
     vampire:    { ko: "뱀파이어",   tags: ["vampire", "fangs", "pale skin"],                    compat: ["daily", "formal", "dark", "gothic", "elegant", "winter"] },
     mermaid:    { ko: "인어",       tags: ["mermaid", "fish tail", "scales", "fins"],          compat: ["mermaid_only"] },
-    ghost:      { ko: "유령",       tags: ["ghost", "transparent"],                            compat: ["daily", "formal", "school", "sport", "fantasy", "traditional", "swimwear", "winter", "casual", "elegant", "dark", "gothic", "ghost_safe"] }
+    ghost:      { ko: "유령",       tags: ["ghost", "transparent"],                            compat: ["daily", "formal", "school", "fantasy", "traditional", "winter", "casual", "elegant", "dark", "gothic", "ghost_safe", "celestial"] },
+    fairy:      { ko: "요정",       tags: ["fairy", "fairy wings", "pointy ears"],             compat: ["fantasy", "elegant", "celestial", "casual", "traditional"] },
+    cyborg:     { ko: "사이보그",   tags: ["cyborg", "mechanical parts", "glowing eyes"],      compat: ["daily", "dark", "scifi", "formal", "sport"] },
+    spirit:     { ko: "정령",       tags: ["spirit", "glowing", "ethereal"],                   compat: ["fantasy", "celestial", "elegant", "traditional", "ghost_safe"] },
+    doll:       { ko: "인형",       tags: ["doll", "ball-jointed doll", "doll joints"],        compat: ["elegant", "gothic", "fantasy", "casual", "dark"] }
   },
 
   // 수인 세부 동물 (species가 beastkin일 때만 사용)
@@ -614,51 +618,66 @@ const DATA = {
     squirrel:  { ko: "다람쥐",   tags: ["animal ears", "squirrel ears", "squirrel tail", "animal ear fluff"] },
     panda:     { ko: "판다",     tags: ["animal ears", "panda ears", "animal ear fluff"] },
     bird:      { ko: "새",       tags: ["feathered wings", "bird tail"] },
-    snake:     { ko: "뱀",       tags: ["snake tail", "slit pupils", "scales"] }
+    snake:     { ko: "뱀",       tags: ["snake tail", "slit pupils", "scales"] },
+    bat:       { ko: "박쥐",     tags: ["animal ears", "bat ears", "bat wings"] },
+    otter:     { ko: "수달",     tags: ["animal ears", "otter ears", "otter tail"] },
+    phoenix:   { ko: "봉황",     tags: ["feathered wings", "phoenix", "fire"] },
+    peacock:   { ko: "공작",     tags: ["feathered wings", "peacock tail", "colorful feathers"] },
+    crane:     { ko: "두루미",   tags: ["feathered wings", "crane", "white feathers"] },
+    lizard:    { ko: "도마뱀",   tags: ["scales", "lizard tail", "slit pupils"] }
   },
   skin: {
     "pale skin":        "창백한 피부",
     "fair skin":        "밝은 피부",
     "light brown skin": "햇빛탄 피부",
+    "tan":              "태닝 피부",
     "dark skin":        "어두운 피부",
     "very dark skin":   "매우 어두운 피부"
   },
-  hairColor: {
-    "black hair":              "검은색",
-    "dark brown hair":          "진갈색",
-    "chocolate brown hair":     "초콜릿 브라운",
-    "brown hair":               "갈색",
-    "ash brown hair":           "애쉬 브라운",
-    "light brown hair":         "연갈색",
-    "auburn hair":              "적갈색",
-    "copper hair":              "코퍼",
-    "blonde hair":              "금발",
-    "honey blonde hair":        "허니 블론드",
-    "platinum blonde hair":     "플래티넘 블론드",
-    "strawberry blonde hair":   "스트로베리 블론드",
-    "rose gold hair":           "로즈골드",
-    "white hair":               "흰색",
-    "silver hair":              "은발",
-    "grey hair":                "회색",
-    "red hair":                 "빨간색",
-    "burgundy hair":            "버건디",
-    "pink hair":                "분홍색",
-    "light pink hair":          "연분홍",
-    "purple hair":              "보라색",
-    "lavender hair":            "라벤더",
-    "dark purple hair":         "진보라",
-    "blue hair":                "파란색",
-    "cerulean hair":            "세룰리안",
-    "light blue hair":          "연파랑",
-    "navy hair":                "네이비",
-    "aqua hair":                "아쿠아",
-    "teal hair":                "청록색",
-    "green hair":               "초록색",
-    "dark green hair":          "진초록",
-    "mint hair":                "민트",
-    "orange hair":              "주황색",
-    "gradient hair":            "그라데이션"
+  hairColorBase: {
+    "black":     "검은색",
+    "brown":     "갈색",
+    "blonde":    "금발",
+    "white":     "흰색",
+    "silver":    "은발",
+    "grey":      "회색",
+    "red":       "빨간색",
+    "pink":      "분홍색",
+    "purple":    "보라색",
+    "blue":      "파란색",
+    "green":     "초록색",
+    "orange":    "주황색",
+    "teal":      "청록색",
+    "aqua":      "아쿠아",
+    "mint":      "민트",
+    "lavender":  "라벤더",
+    "copper":    "코퍼",
+    "auburn":    "적갈색",
+    "burgundy":  "버건디",
+    "navy":      "네이비",
+    "rose gold": "로즈골드",
+    "cream":     "크림",
+    "peach":     "피치",
+    "coral":     "코랄",
+    "mauve":     "모브",
+    "gradient":  "그라데이션"
   },
+  hairToneModifiers: {
+    "dark":        "다크",
+    "deep":        "딥",
+    "light":       "라이트",
+    "pale":        "페일",
+    "bright":      "브라이트",
+    "vivid":       "비비드",
+    "ash":         "애쉬",
+    "pastel":      "파스텔",
+    "dusty":       "더스티",
+    "platinum":    "플래티넘",
+    "honey":       "허니",
+    "strawberry":  "스트로베리",
+    "chocolate":   "초콜릿"
+  },
+  hairNoTone: ["black", "white", "grey", "gradient", "rose gold", "cream"],
   // 머리 길이는 숫자 레벨로 관리 (1: 매우 짧음 ~ 6: 아주 아주 긴)
   hairLength: {
     "very short hair":   { ko: "매우 짧음",        level: 1 },
@@ -682,7 +701,14 @@ const DATA = {
     "braid":            { ko: "땋은머리",         minLevel: 3 },
     "twin braids":      { ko: "양갈래 땋은머리",  minLevel: 4 },
     "twintails":        { ko: "트윈테일",         minLevel: 4 },
-    "drill hair":       { ko: "드릴 머리",        minLevel: 4 }
+    "drill hair":       { ko: "드릴 머리",        minLevel: 4 },
+    "bob cut":          { ko: "단발 보브",        minLevel: 2 },
+    "low ponytail":     { ko: "로우 포니테일",    minLevel: 3 },
+    "french braid":     { ko: "프렌치 브레이드",  minLevel: 3 },
+    "fishtail braid":   { ko: "피쉬테일",         minLevel: 4 },
+    "half updo":        { ko: "하프업",           minLevel: 3 },
+    "high ponytail":    { ko: "높은 포니테일",    minLevel: 3 },
+    "crown braid":      { ko: "왕관 땋기",        minLevel: 4 }
   },
 
   bangs: {
@@ -693,7 +719,9 @@ const DATA = {
     "sidelocks":         { ko: "구레나룻",             minLevel: 1 },
     "no bangs":          { ko: "앞머리 없음",          minLevel: 1 },
     "hair between eyes": { ko: "눈 사이 앞머리",       minLevel: 2 },
-    "hair over one eye": { ko: "한쪽 눈 가린 앞머리",  minLevel: 3 }
+    "hair over one eye": { ko: "한쪽 눈 가린 앞머리",  minLevel: 3 },
+    "curtain bangs":     { ko: "커튼 앞머리",          minLevel: 1 },
+    "see-through bangs": { ko: "시스루 앞머리",        minLevel: 1 }
   },
   eyeShape: {
     "round eyes":       "동그란 눈",
@@ -703,38 +731,50 @@ const DATA = {
     "droopy eyes":      "처진 눈",
     "tsurime":          "치켜뜬 눈 (츠리메)",
     "tareme":           "처진 눈 (타레메)",
-    "half-closed eyes": "반쯤 감은 눈"
+    "half-closed eyes": "반쯤 감은 눈",
+    "big eyes":         "큰 눈",
+    "upturned eyes":    "올라간 눈꼬리"
   },
-  eyeColor: {
-    "blue eyes":        "파란색",
-    "light blue eyes":  "하늘색",
-    "aqua eyes":        "아쿠아",
-    "turquoise eyes":   "터콰이즈",
-    "teal eyes":        "청록색",
-    "green eyes":       "초록색",
-    "emerald eyes":     "에메랄드",
-    "mint eyes":        "민트",
-    "brown eyes":       "갈색",
-    "dark brown eyes":  "진갈색",
-    "hazel eyes":       "헤이즐",
-    "bronze eyes":      "브론즈",
-    "black eyes":       "검은색",
-    "red eyes":         "빨간색",
-    "crimson eyes":     "크림슨",
-    "pink eyes":        "분홍색",
-    "rose eyes":        "로즈",
-    "purple eyes":      "보라색",
-    "violet eyes":      "바이올렛",
-    "lavender eyes":    "라벤더",
-    "yellow eyes":      "노란색",
-    "gold eyes":        "골드",
-    "amber eyes":       "호박색",
-    "orange eyes":      "주황색",
-    "grey eyes":        "회색",
-    "ash grey eyes":    "애쉬 그레이",
-    "silver eyes":      "은색",
-    "white eyes":       "흰색"
+  eyeColorBase: {
+    "blue":      "파란색",
+    "aqua":      "아쿠아",
+    "turquoise": "터콰이즈",
+    "teal":      "청록색",
+    "green":     "초록색",
+    "emerald":   "에메랄드",
+    "mint":      "민트",
+    "brown":     "갈색",
+    "hazel":     "헤이즐",
+    "bronze":    "브론즈",
+    "black":     "검은색",
+    "red":       "빨간색",
+    "crimson":   "크림슨",
+    "pink":      "분홍색",
+    "rose":      "로즈",
+    "purple":    "보라색",
+    "violet":    "바이올렛",
+    "lavender":  "라벤더",
+    "yellow":    "노란색",
+    "gold":      "골드",
+    "amber":     "호박색",
+    "orange":    "주황색",
+    "grey":      "회색",
+    "silver":    "은색",
+    "white":     "흰색",
+    "copper":    "코퍼",
+    "ruby":      "루비",
+    "sapphire":  "사파이어",
+    "jade":      "비취"
   },
+  eyeToneModifiers: {
+    "dark":      "다크",
+    "deep":      "딥",
+    "light":     "라이트",
+    "pale":      "페일",
+    "bright":    "브라이트",
+    "vivid":     "비비드"
+  },
+  eyeNoTone: ["black", "white", "gold", "silver"],
   build: {
     petite:    { ko: "작고 가냘픔", tags: ["petite", "short"] },
     slim:      { ko: "슬림",        tags: ["slim"] },
@@ -742,7 +782,9 @@ const DATA = {
     curvy:     { ko: "굴곡진 체형", tags: ["curvy"] },
     athletic:  { ko: "운동선수형",  tags: ["toned", "athletic"] },
     tall:      { ko: "장신",        tags: ["tall female"] },
-    chubby:    { ko: "통통함",      tags: ["chubby"] }
+    chubby:    { ko: "통통함",      tags: ["chubby"] },
+    muscular:  { ko: "근육질",      tags: ["muscular"] },
+    lanky:     { ko: "마름+장신",   tags: ["slim", "tall"] }
   },
   breast: {
     "flat chest":   "플랫",
@@ -759,392 +801,1131 @@ const DATA = {
     "mature female": "성숙함"
   },
   outfit: {
-    // ──────── 일상 / 모던 ────────
-    "베이지 오버사이즈 니트 + 체크 스커트": {
-      tags: ["oversized sweater", "beige sweater", "plaid skirt", "thighhighs"],
-      compat: ["daily", "casual", "winter"]
+    // ──────── 일상 / 캐주얼 ────────
+    "오버사이즈 니트 + 체크 하의": {
+      baseTags: ["oversized sweater", "beige sweater", "plaid pattern"],
+      genderTags: {
+        female:      ["plaid skirt", "thighhighs"],
+        male:        ["plaid pants"],
+        androgynous: ["plaid skirt", "thighhighs"]
+      },
+      compat: ["daily", "casual", "winter"],
+      archAffinity: ["gentle", "shy", "cheerful"]
     },
-    "화이트 셔츠 + 하이웨스트 데님": {
-      tags: ["white shirt", "collared shirt", "high-waist jeans", "tucked-in shirt"],
+    "화이트 셔츠 + 하이웨스트 하의": {
+      baseTags: ["white shirt", "collared shirt", "tucked-in shirt"],
+      genderTags: {
+        female:      ["high-waist jeans", "belt"],
+        male:        ["high-waist jeans", "belt"],
+        androgynous: ["high-waist jeans", "belt"]
+      },
       compat: ["daily", "casual"]
     },
     "블랙 크롭탑 + 와이드 카고 팬츠": {
-      tags: ["black crop top", "cargo pants", "wide pants", "midriff"],
-      compat: ["daily", "casual"]
+      baseTags: ["black crop top", "cargo pants", "wide pants", "midriff"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["daily", "casual"],
+      archAffinity: ["cool", "fierce"]
     },
-    "파스텔 후디 + 플리츠 미니 스커트": {
-      tags: ["hoodie", "pastel color", "pleated skirt", "thighhighs"],
-      compat: ["daily", "casual"]
+    "파스텔 후디 + 플리츠 하의": {
+      baseTags: ["hoodie", "pastel color"],
+      genderTags: {
+        female:      ["pleated skirt", "thighhighs"],
+        male:        ["sweatpants", "sneakers"],
+        androgynous: ["pleated skirt", "thighhighs"]
+      },
+      compat: ["daily", "casual"],
+      archAffinity: ["cheerful", "shy", "cheeky"]
     },
-    "옅은 핑크 니트 카디건 + 하얀 원피스": {
-      tags: ["cardigan", "pink cardigan", "white dress", "frills"],
-      compat: ["daily", "elegant", "mermaid_only"]
+    "핑크 니트 카디건 + 하얀 원피스": {
+      baseTags: ["cardigan", "pink cardigan", "white dress", "frills"],
+      genderTags: {
+        female:      [],
+        male:        ["white shirt", "white pants"],
+        androgynous: []
+      },
+      compat: ["daily", "elegant", "mermaid_only"],
+      archAffinity: ["gentle", "shy"]
     },
     "네이비 세일러 칼라 원피스": {
-      tags: ["sailor dress", "navy blue dress", "white collar", "ribbon"],
+      baseTags: ["sailor collar", "navy blue", "white collar", "ribbon"],
+      genderTags: {
+        female:      ["sailor dress"],
+        male:        ["sailor shirt", "navy pants"],
+        androgynous: ["sailor dress"]
+      },
       compat: ["daily", "elegant", "mermaid_only"]
     },
-    "오렌지 탱크탑 + 데님 쇼츠": {
-      tags: ["tank top", "orange shirt", "denim shorts", "short shorts"],
+    "탱크탑 + 데님 쇼츠": {
+      baseTags: ["tank top", "orange shirt"],
+      genderTags: {
+        female:      ["denim shorts", "short shorts"],
+        male:        ["denim shorts"],
+        androgynous: ["denim shorts", "short shorts"]
+      },
+      compat: ["daily", "casual", "sport"],
+      archAffinity: ["cheerful", "cheeky"]
+    },
+    "오버사이즈 티셔츠 + 반바지": {
+      baseTags: ["oversized shirt", "grey shirt"],
+      genderTags: {
+        female:      ["bike shorts"],
+        male:        ["shorts"],
+        androgynous: ["bike shorts"]
+      },
       compat: ["daily", "casual", "sport"]
     },
-    "회색 오버사이즈 티셔츠 + 자전거 반바지": {
-      tags: ["oversized shirt", "grey shirt", "bike shorts"],
-      compat: ["daily", "casual", "sport"]
-    },
-    "체크 셔츠 + 블랙 스키니 진": {
-      tags: ["plaid shirt", "flannel shirt", "black pants", "skinny jeans"],
+    "체크 셔츠 + 스키니 진": {
+      baseTags: ["plaid shirt", "flannel shirt", "black pants"],
+      genderTags: {
+        female:      ["skinny jeans"],
+        male:        ["skinny jeans"],
+        androgynous: ["skinny jeans"]
+      },
       compat: ["daily", "casual"]
     },
-    "크림 터틀넥 + 롱 울 스커트": {
-      tags: ["turtleneck", "white sweater", "long skirt", "wool skirt"],
-      compat: ["daily", "elegant", "winter"]
+    "크림 터틀넥 + 롱 하의": {
+      baseTags: ["turtleneck", "white sweater"],
+      genderTags: {
+        female:      ["long skirt", "wool skirt"],
+        male:        ["slacks"],
+        androgynous: ["long skirt", "wool skirt"]
+      },
+      compat: ["daily", "elegant", "winter"],
+      archAffinity: ["gentle", "serious"]
     },
     "라벤더 파자마 세트": {
-      tags: ["pajamas", "purple pajamas", "long sleeves", "button-up"],
-      compat: ["casual"]
+      baseTags: ["pajamas", "purple pajamas", "long sleeves", "button-up"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["casual"],
+      archAffinity: ["gentle", "shy"]
     },
     "옐로우 우비 + 장화": {
-      tags: ["raincoat", "yellow raincoat", "rain boots", "hood up"],
-      compat: ["daily", "casual"]
+      baseTags: ["raincoat", "yellow raincoat", "rain boots", "hood up"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["daily", "casual"],
+      archAffinity: ["cheerful", "cheeky"]
     },
-    "베레모 + 프렌치 스트라이프 티": {
-      tags: ["beret", "striped shirt", "horizontal stripes", "high-waist skirt"],
-      compat: ["daily", "elegant"]
+    "베레모 + 프렌치 스트라이프": {
+      baseTags: ["beret", "striped shirt", "horizontal stripes"],
+      genderTags: {
+        female:      ["high-waist skirt"],
+        male:        ["high-waist pants"],
+        androgynous: ["high-waist skirt"]
+      },
+      compat: ["daily", "elegant"],
+      archAffinity: ["gentle", "cheerful"]
     },
-    "데님 오버롤 + 화이트 티셔츠": {
-      tags: ["overalls", "denim overalls", "white shirt", "t-shirt"],
-      compat: ["daily", "casual"]
+    "데님 오버롤 + 화이트 티": {
+      baseTags: ["overalls", "denim overalls", "white shirt", "t-shirt"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["daily", "casual"],
+      archAffinity: ["cheerful", "cheeky"]
     },
-    "카키 밀리터리 재킷 + 블랙 터틀넥": {
-      tags: ["military jacket", "khaki jacket", "black turtleneck", "cargo pants"],
-      compat: ["daily", "winter"]
+    "밀리터리 재킷 + 블랙 터틀넥": {
+      baseTags: ["military jacket", "khaki jacket", "black turtleneck"],
+      genderTags: {
+        female:      ["cargo pants"],
+        male:        ["cargo pants"],
+        androgynous: ["cargo pants"]
+      },
+      compat: ["daily", "winter"],
+      archAffinity: ["cool", "serious", "fierce"]
+    },
+    "린넨 셔츠 + 베이지 하의": {
+      baseTags: ["white shirt", "linen", "rolled sleeves"],
+      genderTags: {
+        female:      ["beige skirt"],
+        male:        ["beige pants"],
+        androgynous: ["beige pants"]
+      },
+      compat: ["daily", "casual"],
+      archAffinity: ["gentle", "cool"]
+    },
+    "V넥 니트 + 슬랙스": {
+      baseTags: ["v-neck sweater", "black sweater"],
+      genderTags: {
+        female:      ["slacks", "belt"],
+        male:        ["slacks", "belt"],
+        androgynous: ["slacks", "belt"]
+      },
+      compat: ["daily", "formal"],
+      archAffinity: ["cool", "serious", "gentle"]
+    },
+    "후디 + 조거 팬츠": {
+      baseTags: ["hoodie", "grey hoodie", "sneakers"],
+      genderTags: {
+        female:      ["sweatpants"],
+        male:        ["sweatpants"],
+        androgynous: ["sweatpants"]
+      },
+      compat: ["daily", "casual", "sport"],
+      archAffinity: ["cheerful", "cheeky", "shy"]
+    },
+    "오픈 카라 셔츠 + 화이트 하의": {
+      baseTags: ["open collar shirt", "mint shirt"],
+      genderTags: {
+        female:      ["white skirt"],
+        male:        ["white pants"],
+        androgynous: ["white pants"]
+      },
+      compat: ["daily", "casual", "elegant"],
+      archAffinity: ["gentle", "cheerful"]
+    },
+    "봄버 자켓 + 블랙 진": {
+      baseTags: ["bomber jacket", "green jacket", "black jeans"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["daily", "casual"],
+      archAffinity: ["cool", "cheeky"]
     },
 
     // ──────── 스트리트 / 엣지 ────────
-    "블랙 가죽 재킷 + 찢어진 청바지": {
-      tags: ["leather jacket", "black jacket", "torn jeans", "ripped jeans"],
-      compat: ["daily", "dark"]
+    "가죽 재킷 + 찢어진 청바지": {
+      baseTags: ["leather jacket", "black jacket", "torn jeans", "ripped jeans"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["daily", "dark"],
+      archAffinity: ["cool", "fierce", "cheeky"]
     },
     "오버사이즈 그래픽 티 + 와이드 팬츠": {
-      tags: ["oversized shirt", "graphic shirt", "baggy pants", "sneakers"],
-      compat: ["daily", "casual"]
+      baseTags: ["oversized shirt", "graphic shirt", "baggy pants", "sneakers"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["daily", "casual"],
+      archAffinity: ["cheerful", "cheeky"]
     },
     "테크웨어 자켓 + 유틸리티 벨트": {
-      tags: ["techwear", "cargo pants", "utility belt", "buckles"],
-      compat: ["daily", "dark"]
+      baseTags: ["techwear", "cargo pants", "utility belt", "buckles"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["daily", "dark", "scifi"],
+      archAffinity: ["cool", "serious", "fierce"]
     },
-    "크롭 후디 + 가죽 미니스커트": {
-      tags: ["cropped hoodie", "leather skirt", "miniskirt", "fishnets"],
-      compat: ["daily", "dark"]
+    "크롭 후디 + 가죽 하의": {
+      baseTags: ["cropped hoodie", "fishnets"],
+      genderTags: {
+        female:      ["leather skirt", "miniskirt"],
+        male:        ["leather pants"],
+        androgynous: ["leather skirt", "miniskirt"]
+      },
+      compat: ["daily", "dark"],
+      archAffinity: ["fierce", "cheeky", "mysterious"]
     },
     "올블랙 터틀넥 코트 + 가죽 부츠": {
-      tags: ["long coat", "black coat", "turtleneck", "knee-high boots"],
-      compat: ["daily", "dark", "winter"]
+      baseTags: ["long coat", "black coat", "turtleneck"],
+      genderTags: {
+        female:      ["knee-high boots"],
+        male:        ["leather boots"],
+        androgynous: ["knee-high boots"]
+      },
+      compat: ["daily", "dark", "winter"],
+      archAffinity: ["cool", "fierce", "mysterious"]
     },
     "홀로그램 재킷 + 메탈릭 팬츠": {
-      tags: ["holographic", "metallic jacket", "metallic pants", "futuristic"],
-      compat: ["daily", "dark"]
+      baseTags: ["holographic", "metallic jacket", "metallic pants", "futuristic"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["daily", "dark", "scifi"],
+      archAffinity: ["cheerful", "cheeky", "mysterious"]
     },
-
-    // ──────── 포멀 / 오피스 ────────
-    "차콜 그레이 스리피스 정장": {
-      tags: ["business suit", "grey suit", "vest", "necktie", "dress shirt"],
-      compat: ["formal"]
+	// ──────── 포멀 / 오피스 ────────
+    "스리피스 정장": {
+      baseTags: ["business suit", "grey suit", "vest", "dress shirt"],
+      genderTags: {
+        female:      ["pencil skirt", "pantyhose", "necktie"],
+        male:        ["slacks", "necktie"],
+        androgynous: ["slacks", "necktie"]
+      },
+      compat: ["formal"],
+      archAffinity: ["serious", "cool", "fierce"]
     },
-    "네이비 블레이저 + 슬랙스": {
-      tags: ["blazer", "navy blazer", "slacks", "dress shirt"],
-      compat: ["formal", "school"]
+    "네이비 블레이저 세트": {
+      baseTags: ["blazer", "navy blazer", "dress shirt"],
+      genderTags: {
+        female:      ["pencil skirt", "pantyhose"],
+        male:        ["slacks"],
+        androgynous: ["slacks"]
+      },
+      compat: ["formal", "school"],
+      archAffinity: ["serious", "cool"]
     },
-    "화이트 블라우스 + 펜슬 스커트": {
-      tags: ["office lady", "white blouse", "pencil skirt", "black pantyhose"],
-      compat: ["formal"]
+    "화이트 블라우스 + 하의": {
+      baseTags: ["white blouse", "tucked-in shirt"],
+      genderTags: {
+        female:      ["pencil skirt", "black pantyhose"],
+        male:        ["slacks", "belt"],
+        androgynous: ["slacks", "belt"]
+      },
+      compat: ["formal"],
+      archAffinity: ["serious", "gentle", "cool"]
     },
-    "베이지 트렌치 코트 + 블랙 드레스": {
-      tags: ["trench coat", "beige coat", "black dress", "stockings"],
-      compat: ["formal", "daily", "winter"]
+    "트렌치 코트 + 블랙 이너": {
+      baseTags: ["trench coat", "beige coat"],
+      genderTags: {
+        female:      ["black dress", "stockings"],
+        male:        ["black shirt", "slacks"],
+        androgynous: ["black dress", "stockings"]
+      },
+      compat: ["formal", "daily", "winter"],
+      archAffinity: ["cool", "mysterious", "serious"]
     },
     "블랙 턱시도": {
-      tags: ["tuxedo", "black suit", "bowtie", "dress shirt", "formal"],
-      compat: ["formal"]
+      baseTags: ["tuxedo", "black suit", "bowtie", "dress shirt", "formal"],
+      genderTags: {
+        female:      ["pantyhose"],
+        male:        ["slacks"],
+        androgynous: ["slacks"]
+      },
+      compat: ["formal"],
+      archAffinity: ["serious", "cool", "fierce"]
     },
-    "와인색 벨벳 이브닝 드레스": {
-      tags: ["evening gown", "red dress", "velvet", "long dress", "backless"],
-      compat: ["formal", "elegant", "mermaid_only"]
+    "벨벳 이브닝 드레스": {
+      baseTags: ["velvet", "long dress"],
+      genderTags: {
+        female:      ["evening gown", "red dress", "backless"],
+        male:        ["red suit", "velvet suit", "dress shirt"],
+        androgynous: ["evening gown", "red dress", "backless"]
+      },
+      compat: ["formal", "elegant", "mermaid_only"],
+      archAffinity: ["mysterious", "fierce", "gentle"]
+    },
+    "더블 브레스트 정장": {
+      baseTags: ["double-breasted suit", "black suit", "dress shirt", "necktie"],
+      genderTags: {
+        female:      ["pencil skirt", "pantyhose"],
+        male:        ["slacks"],
+        androgynous: ["slacks"]
+      },
+      compat: ["formal"],
+      archAffinity: ["fierce", "serious", "cool"]
+    },
+    "아이보리 블라우스 + 와이드 하의": {
+      baseTags: ["white blouse", "belt", "tucked-in shirt"],
+      genderTags: {
+        female:      ["wide pants"],
+        male:        ["wide pants"],
+        androgynous: ["wide pants"]
+      },
+      compat: ["formal", "daily"],
+      archAffinity: ["cool", "serious", "gentle"]
     },
 
     // ──────── 교복 / 학생 ────────
-    "하얀 세일러복 + 남색 플리츠 스커트": {
-      tags: ["serafuku", "school uniform", "white shirt", "blue sailor collar", "pleated skirt"],
+    "세일러 교복": {
+      baseTags: ["school uniform", "sailor collar", "white shirt"],
+      genderTags: {
+        female:      ["pleated skirt", "thighhighs"],
+        male:        ["black pants"],
+        androgynous: ["pleated skirt", "thighhighs"]
+      },
+      compat: ["school"],
+      archAffinity: ["cheerful", "gentle", "shy"]
+    },
+    "체크 블레이저 교복": {
+      baseTags: ["school uniform", "blazer", "white shirt", "red necktie"],
+      genderTags: {
+        female:      ["plaid skirt"],
+        male:        ["plaid pants"],
+        androgynous: ["plaid skirt"]
+      },
       compat: ["school"]
     },
-    "체크 교복 블레이저 + 빨간 넥타이": {
-      tags: ["school uniform", "blazer", "plaid skirt", "red necktie", "white shirt"],
+    "블랙 블레이저 교복": {
+      baseTags: ["school uniform", "black blazer"],
+      genderTags: {
+        female:      ["pleated skirt", "thighhighs", "loafers"],
+        male:        ["black pants", "loafers"],
+        androgynous: ["pleated skirt", "thighhighs", "loafers"]
+      },
+      compat: ["school"],
+      archAffinity: ["cool", "serious"]
+    },
+    "카디건 교복": {
+      baseTags: ["school cardigan", "school uniform", "ribbon"],
+      genderTags: {
+        female:      ["pleated skirt"],
+        male:        ["slacks"],
+        androgynous: ["pleated skirt"]
+      },
+      compat: ["school"],
+      archAffinity: ["gentle", "shy"]
+    },
+    "하복 교복": {
+      baseTags: ["school uniform", "short sleeves", "summer uniform"],
+      genderTags: {
+        female:      ["pleated skirt"],
+        male:        ["shorts"],
+        androgynous: ["pleated skirt"]
+      },
       compat: ["school"]
     },
-    "검은 블레이저 교복 + 니삭스": {
-      tags: ["school uniform", "black blazer", "pleated skirt", "thighhighs", "loafers"],
-      compat: ["school"]
+    "가쿠란 교복": {
+      baseTags: ["school uniform", "gakuran", "stand collar"],
+      genderTags: {
+        female:      ["pleated skirt"],
+        male:        ["black pants"],
+        androgynous: ["black pants"]
+      },
+      compat: ["school"],
+      archAffinity: ["serious", "cool", "fierce"]
     },
-    "카디건 교복 + 리본 타이": {
-      tags: ["school cardigan", "school uniform", "ribbon", "pleated skirt"],
-      compat: ["school"]
-    },
-    "하복 교복 (반팔 블라우스 + 스커트)": {
-      tags: ["school uniform", "short sleeves", "summer uniform", "pleated skirt"],
-      compat: ["school"]
+    "마법 학생 로브": {
+      baseTags: ["robe", "school robe", "necktie", "wand"],
+      genderTags: {
+        female:      ["pleated skirt"],
+        male:        ["slacks"],
+        androgynous: ["pleated skirt"]
+      },
+      compat: ["fantasy", "school"],
+      archAffinity: ["cheerful", "shy", "cheeky"]
     },
 
     // ──────── 스포츠 / 운동 ────────
-    "운동복 져지 세트 (빨강)": {
-      tags: ["track suit", "red jacket", "track pants", "sneakers"],
-      compat: ["sport", "casual"]
+    "져지 운동복 세트": {
+      baseTags: ["track suit", "red jacket", "track pants", "sneakers"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["sport", "casual"],
+      archAffinity: ["cheerful", "serious"]
     },
-    "스포츠 브라 + 레깅스": {
-      tags: ["sports bra", "leggings", "midriff", "athletic"],
-      compat: ["sport"]
+    "스포츠 탑 + 레깅스": {
+      baseTags: ["athletic", "midriff"],
+      genderTags: {
+        female:      ["sports bra", "leggings"],
+        male:        ["tank top", "leggings"],
+        androgynous: ["sports bra", "leggings"]
+      },
+      compat: ["sport"],
+      archAffinity: ["fierce", "cheerful", "cool"]
     },
-    "테니스복 (하얀 스커트)": {
-      tags: ["tennis uniform", "white skirt", "visor cap", "sneakers"],
-      compat: ["sport"]
+    "테니스복": {
+      baseTags: ["tennis uniform", "visor cap", "sneakers"],
+      genderTags: {
+        female:      ["white skirt"],
+        male:        ["white shorts"],
+        androgynous: ["white skirt"]
+      },
+      compat: ["sport"],
+      archAffinity: ["cheerful", "cool"]
     },
     "요가 탑 + 하이웨스트 레깅스": {
-      tags: ["crop top", "high-waist leggings", "midriff", "athletic"],
-      compat: ["sport"]
+      baseTags: ["crop top", "high-waist leggings", "midriff", "athletic"],
+      genderTags: {
+        female:      [],
+        male:        ["tank top"],
+        androgynous: []
+      },
+      compat: ["sport"],
+      archAffinity: ["gentle", "cool"]
     },
-    "농구 유니폼 (민소매 + 반바지)": {
-      tags: ["basketball uniform", "jersey", "shorts", "sneakers"],
-      compat: ["sport"]
+    "농구 유니폼": {
+      baseTags: ["basketball uniform", "jersey", "shorts", "sneakers"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["sport"],
+      archAffinity: ["cheerful", "fierce"]
     },
-
-    // ──────── 판타지 / RPG ────────
+    "축구 유니폼": {
+      baseTags: ["soccer uniform", "jersey", "shorts", "cleats"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["sport"],
+      archAffinity: ["cheerful", "fierce", "serious"]
+    },
+    "권투 복장": {
+      baseTags: ["boxing", "tank top", "shorts", "boxing gloves", "athletic"],
+      genderTags: {
+        female:      ["sports bra"],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["sport"],
+      archAffinity: ["fierce", "serious", "cool"]
+    },
+    "래시가드 + 보드숏": {
+      baseTags: ["rash guard", "board shorts", "athletic"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["sport", "swimwear"],
+      archAffinity: ["cheerful", "cool"]
+    },
+	// ──────── 판타지 / RPG ────────
     "검은 후드 로브 + 은 장식": {
-      tags: ["robe", "black robe", "hood up", "silver jewelry", "wide sleeves"],
-      compat: ["fantasy", "dark"]
+      baseTags: ["robe", "black robe", "hood up", "silver jewelry", "wide sleeves"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["fantasy", "dark"],
+      archAffinity: ["mysterious", "serious", "cool"]
     },
-    "하얀 대천사 로브 + 금빛 자수": {
-      tags: ["white robe", "gold trim", "wide sleeves", "holy"],
-      compat: ["fantasy", "celestial", "elegant", "mermaid_only"]
+    "대천사 로브 + 금빛 자수": {
+      baseTags: ["white robe", "gold trim", "wide sleeves", "holy"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["fantasy", "celestial", "elegant", "mermaid_only"],
+      archAffinity: ["gentle", "serious"]
     },
-    "보라색 마법사 로브 + 별 패턴": {
-      tags: ["wizard robe", "purple robe", "star print", "wizard hat"],
-      compat: ["fantasy"]
+    "마법사 로브 + 별 패턴": {
+      baseTags: ["wizard robe", "purple robe", "star print", "wizard hat"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["fantasy"],
+      archAffinity: ["mysterious", "cheerful", "cheeky"]
     },
-    "은빛 풀플레이트 기사 갑옷": {
-      tags: ["knight", "full armor", "plate armor", "silver armor", "gauntlets"],
-      compat: ["fantasy"]
+    "풀플레이트 기사 갑옷": {
+      baseTags: ["knight", "full armor", "plate armor", "silver armor", "gauntlets"],
+      genderTags: {
+        female:      ["breastplate"],
+        male:        ["breastplate"],
+        androgynous: ["breastplate"]
+      },
+      compat: ["fantasy"],
+      archAffinity: ["serious", "fierce", "cool"]
     },
-    "레더 아머 + 허리 벨트 + 망토": {
-      tags: ["leather armor", "belt", "cape", "brown cape"],
-      compat: ["fantasy"]
+    "레더 아머 + 망토": {
+      baseTags: ["leather armor", "belt", "cape", "brown cape"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["fantasy"],
+      archAffinity: ["cool", "serious"]
     },
     "다크 나이트 블랙 아머": {
-      tags: ["black armor", "dark knight", "cape", "pauldrons"],
-      compat: ["fantasy", "dark"]
+      baseTags: ["black armor", "dark knight", "cape", "pauldrons"],
+      genderTags: {
+        female:      ["breastplate"],
+        male:        ["breastplate"],
+        androgynous: ["breastplate"]
+      },
+      compat: ["fantasy", "dark"],
+      archAffinity: ["fierce", "cool", "serious"]
     },
-    "엘프 궁수 복장 (초록 튜닉 + 망토)": {
-      tags: ["green tunic", "cape", "belt", "quiver", "leather boots"],
-      compat: ["fantasy"]
+    "엘프 궁수 복장": {
+      baseTags: ["green tunic", "cape", "belt", "quiver", "leather boots"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["fantasy"],
+      archAffinity: ["cool", "serious", "gentle"]
     },
-    "검은 레더 도적 복장 + 후드": {
-      tags: ["rogue", "hood up", "leather jacket", "belts", "fingerless gloves"],
-      compat: ["fantasy", "dark"]
+    "도적 복장 + 후드": {
+      baseTags: ["rogue", "hood up", "leather jacket", "belts", "fingerless gloves"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["fantasy", "dark"],
+      archAffinity: ["cool", "cheeky", "mysterious"]
     },
-    "실버 소서리스 드레스": {
-      tags: ["silver dress", "long dress", "flowy", "magical"],
-      compat: ["fantasy", "elegant", "celestial", "mermaid_only"]
+    "소서러 드레스": {
+      baseTags: ["long dress", "flowy", "magical"],
+      genderTags: {
+        female:      ["silver dress"],
+        male:        ["silver robe", "wide sleeves"],
+        androgynous: ["silver dress"]
+      },
+      compat: ["fantasy", "elegant", "celestial", "mermaid_only"],
+      archAffinity: ["mysterious", "gentle"]
     },
-    "빨간 성기사 망토 + 황금 아머": {
-      tags: ["gold armor", "red cape", "paladin", "breastplate"],
-      compat: ["fantasy", "celestial"]
+    "성기사 망토 + 황금 아머": {
+      baseTags: ["gold armor", "red cape", "paladin", "breastplate"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["fantasy", "celestial"],
+      archAffinity: ["serious", "fierce"]
+    },
+    "레인저 튜닉 + 롱 부츠": {
+      baseTags: ["white tunic", "belt", "long boots", "cape"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["fantasy"],
+      archAffinity: ["cool", "gentle", "serious"]
     },
 
     // ──────── 전통 / 민속 ────────
-    "벚꽃 무늬 분홍 기모노": {
-      tags: ["kimono", "pink kimono", "cherry blossom print", "obi", "japanese clothes"],
-      compat: ["traditional", "mermaid_only"]
+    "벚꽃 무늬 기모노": {
+      baseTags: ["kimono", "pink kimono", "cherry blossom print", "obi", "japanese clothes"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["traditional", "mermaid_only"],
+      archAffinity: ["gentle", "shy"]
     },
-    "검은색 후리소데 기모노": {
-      tags: ["furisode", "black kimono", "wide sleeves", "obi"],
-      compat: ["traditional", "elegant", "mermaid_only"]
+    "후리소데 기모노": {
+      baseTags: ["furisode", "black kimono", "wide sleeves", "obi"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["traditional", "elegant", "mermaid_only"],
+      archAffinity: ["cool", "mysterious", "fierce"]
     },
-    "여름 유카타 (파랑 금붕어 무늬)": {
-      tags: ["yukata", "blue yukata", "obi", "summer"],
-      compat: ["traditional", "swimwear", "mermaid_only"]
+    "여름 유카타": {
+      baseTags: ["yukata", "blue yukata", "obi", "summer"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["traditional", "mermaid_only"],
+      archAffinity: ["cheerful", "gentle"]
     },
     "미코 (무녀) 복장": {
-      tags: ["miko", "miko outfit", "red hakama", "white kimono"],
-      compat: ["traditional", "celestial"]
+      baseTags: ["miko", "miko outfit", "red hakama", "white kimono"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["traditional", "celestial"],
+      archAffinity: ["gentle", "serious"]
     },
-    "화려한 붉은 한복": {
-      tags: ["hanbok", "korean clothes", "red hanbok", "long skirt"],
-      compat: ["traditional", "mermaid_only"]
+    "붉은 한복": {
+      baseTags: ["hanbok", "korean clothes", "red hanbok"],
+      genderTags: {
+        female:      ["long skirt"],
+        male:        ["wide pants"],
+        androgynous: ["long skirt"]
+      },
+      compat: ["traditional", "mermaid_only"],
+      archAffinity: ["gentle", "fierce", "cheerful"]
     },
-    "민트색 한푸 드레스": {
-      tags: ["hanfu", "chinese clothes", "mint dress", "long sleeves"],
-      compat: ["traditional", "elegant", "mermaid_only"]
+    "민트색 한푸": {
+      baseTags: ["hanfu", "chinese clothes", "mint dress", "long sleeves"],
+      genderTags: {
+        female:      [],
+        male:        ["wide pants"],
+        androgynous: []
+      },
+      compat: ["traditional", "elegant", "mermaid_only"],
+      archAffinity: ["gentle", "mysterious"]
     },
     "빨간 치파오 + 금 자수": {
-      tags: ["china dress", "chinese clothes", "red dress", "gold trim"],
-      compat: ["traditional", "elegant", "mermaid_only"]
+      baseTags: ["china dress", "chinese clothes", "gold trim"],
+      genderTags: {
+        female:      ["red dress"],
+        male:        ["red changshan", "mandarin collar"],
+        androgynous: ["red dress"]
+      },
+      compat: ["traditional", "elegant", "mermaid_only"],
+      archAffinity: ["fierce", "mysterious", "cool"]
     },
-
-    // ──────── 서브컬처 / 코스 ────────
-    "클래식 메이드복 (검정+흰 에이프런)": {
-      tags: ["maid", "maid outfit", "apron", "maid headdress", "frills"],
-      compat: ["daily", "elegant"]
+    "하카마 + 하오리": {
+      baseTags: ["hakama", "haori", "japanese clothes"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["traditional", "fantasy"],
+      archAffinity: ["serious", "cool", "fierce"]
     },
-    "로얄 메이드복 (파랑+금 장식)": {
-      tags: ["maid", "blue dress", "gold trim", "maid headdress", "long sleeves"],
-      compat: ["elegant", "fantasy"]
+    "남색 한복 (도포)": {
+      baseTags: ["hanbok", "korean clothes", "blue hanbok"],
+      genderTags: {
+        female:      ["long skirt"],
+        male:        ["dopo", "wide pants"],
+        androgynous: ["dopo", "wide pants"]
+      },
+      compat: ["traditional"],
+      archAffinity: ["serious", "gentle", "cool"]
     },
-    "블랙 고딕 로리타 (리본+레이스)": {
-      tags: ["gothic lolita", "black dress", "frills", "lace", "ribbon"],
-      compat: ["gothic", "elegant", "dark", "mermaid_only"]
+	// ──────── 서브컬처 / 코스 ────────
+    "클래식 메이드복": {
+      baseTags: ["maid", "maid outfit", "apron", "maid headdress", "frills"],
+      genderTags: {
+        female:      ["maid dress"],
+        male:        ["maid dress"],
+        androgynous: ["maid dress"]
+      },
+      compat: ["daily", "elegant"],
+      archAffinity: ["gentle", "cheerful", "shy"]
     },
-    "스위트 로리타 (핑크+리본)": {
-      tags: ["sweet lolita", "pink dress", "frills", "lace", "bonnet"],
-      compat: ["gothic", "elegant", "mermaid_only"]
+    "로얄 메이드복": {
+      baseTags: ["maid", "gold trim", "maid headdress", "long sleeves"],
+      genderTags: {
+        female:      ["blue dress"],
+        male:        ["blue dress"],
+        androgynous: ["blue dress"]
+      },
+      compat: ["elegant", "fantasy"],
+      archAffinity: ["gentle", "serious"]
+    },
+    "고딕 로리타": {
+      baseTags: ["gothic lolita", "frills", "lace", "ribbon"],
+      genderTags: {
+        female:      ["black dress"],
+        male:        ["black shorts", "black vest", "lace trim"],
+        androgynous: ["black dress"]
+      },
+      compat: ["gothic", "elegant", "dark", "mermaid_only"],
+      archAffinity: ["mysterious", "cool", "fierce"]
+    },
+    "스위트 로리타": {
+      baseTags: ["sweet lolita", "frills", "lace", "bonnet"],
+      genderTags: {
+        female:      ["pink dress"],
+        male:        ["pink vest", "shorts", "lace trim"],
+        androgynous: ["pink dress"]
+      },
+      compat: ["gothic", "elegant", "mermaid_only"],
+      archAffinity: ["cheerful", "gentle", "shy"]
     },
     "화이트 고딕 드레스": {
-      tags: ["gothic", "white dress", "lace", "long sleeves", "ribbon"],
-      compat: ["gothic", "elegant", "celestial", "mermaid_only"]
+      baseTags: ["gothic", "lace", "long sleeves", "ribbon"],
+      genderTags: {
+        female:      ["white dress"],
+        male:        ["white shirt", "white vest", "lace collar"],
+        androgynous: ["white dress"]
+      },
+      compat: ["gothic", "elegant", "celestial", "mermaid_only"],
+      archAffinity: ["mysterious", "gentle"]
     },
-    "아이돌 무대의상 (프릴+리본)": {
-      tags: ["idol", "frilled dress", "ribbon", "layered skirt"],
-      compat: ["daily", "elegant"]
+    "아이돌 무대의상": {
+      baseTags: ["idol", "ribbon"],
+      genderTags: {
+        female:      ["frilled dress", "layered skirt"],
+        male:        ["cropped jacket", "stage outfit", "tight pants"],
+        androgynous: ["frilled dress", "layered skirt"]
+      },
+      compat: ["daily", "elegant"],
+      archAffinity: ["cheerful", "cheeky"]
     },
     "치어리더 유니폼": {
-      tags: ["cheerleader", "cheerleader uniform", "pom pom", "pleated skirt"],
-      compat: ["school", "sport"]
+      baseTags: ["cheerleader", "cheerleader uniform", "pom pom"],
+      genderTags: {
+        female:      ["pleated skirt"],
+        male:        ["shorts", "sleeveless shirt"],
+        androgynous: ["pleated skirt"]
+      },
+      compat: ["school", "sport"],
+      archAffinity: ["cheerful", "cheeky", "fierce"]
     },
-    "마녀복 (검정 원피스 + 큰 모자)": {
-      tags: ["witch", "witch hat", "black dress", "cape"],
-      compat: ["fantasy", "dark", "gothic", "mermaid_only"]
+    "마녀 / 마법사 복장": {
+      baseTags: ["witch hat", "cape"],
+      genderTags: {
+        female:      ["witch", "black dress"],
+        male:        ["wizard", "black robe"],
+        androgynous: ["witch", "black dress"]
+      },
+      compat: ["fantasy", "dark", "gothic", "mermaid_only"],
+      archAffinity: ["mysterious", "cheeky", "cool"]
     },
-    "닌자 복장 (흑색)": {
-      tags: ["ninja", "black clothes", "mask", "shoulder pads"],
-      compat: ["fantasy", "dark", "traditional"]
+    "닌자 복장": {
+      baseTags: ["ninja", "black clothes", "mask", "shoulder pads"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["fantasy", "dark", "traditional"],
+      archAffinity: ["cool", "serious", "fierce"]
     },
-    "사무라이 하카마 복장": {
-      tags: ["samurai", "hakama", "haori", "japanese clothes"],
-      compat: ["fantasy", "traditional"]
+    "사무라이 복장": {
+      baseTags: ["samurai", "hakama", "haori", "japanese clothes"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["fantasy", "traditional"],
+      archAffinity: ["serious", "cool", "fierce"]
     },
     "해적 선장 코트": {
-      tags: ["pirate", "tricorne", "pirate coat", "red coat", "boots"],
-      compat: ["fantasy"]
+      baseTags: ["pirate", "tricorne", "pirate coat", "boots"],
+      genderTags: {
+        female:      ["red coat", "corset"],
+        male:        ["red coat", "vest"],
+        androgynous: ["red coat"]
+      },
+      compat: ["fantasy"],
+      archAffinity: ["fierce", "cheeky", "cool"]
+    },
+    "집사 복장": {
+      baseTags: ["butler", "tailcoat", "white gloves", "vest", "dress shirt"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["formal", "elegant"],
+      archAffinity: ["serious", "cool", "gentle"]
     },
 
     // ──────── 수영복 ────────
-    "빨간 원피스 수영복": {
-      tags: ["one-piece swimsuit", "red swimsuit"],
-      compat: ["swimwear"]
+    "원피스 수영복": {
+      baseTags: ["one-piece swimsuit"],
+      genderTags: {
+        female:      ["red swimsuit"],
+        male:        ["swim trunks", "red trunks", "shirtless"],
+        androgynous: ["red swimsuit"]
+      },
+      compat: ["swimwear"],
+      archAffinity: ["cheerful", "fierce"]
     },
-    "흰색 프릴 비키니": {
-      tags: ["bikini", "white bikini", "frilled bikini"],
-      compat: ["swimwear"]
+    "프릴 비키니": {
+      baseTags: ["white bikini"],
+      genderTags: {
+        female:      ["bikini", "frilled bikini"],
+        male:        ["swim trunks", "white trunks", "shirtless"],
+        androgynous: ["bikini", "frilled bikini"]
+      },
+      compat: ["swimwear"],
+      archAffinity: ["gentle", "shy", "cheerful"]
     },
-    "검은 스쿨 수영복": {
-      tags: ["school swimsuit", "black swimsuit"],
+    "스쿨 수영복": {
+      baseTags: ["school swimsuit"],
+      genderTags: {
+        female:      ["black swimsuit"],
+        male:        ["swim trunks", "black trunks", "shirtless"],
+        androgynous: ["black swimsuit"]
+      },
       compat: ["swimwear", "school"]
     },
-    "네이비 세일러 비키니": {
-      tags: ["bikini", "sailor bikini", "blue bikini"],
-      compat: ["swimwear"]
+    "세일러 비키니": {
+      baseTags: ["sailor bikini"],
+      genderTags: {
+        female:      ["bikini", "blue bikini"],
+        male:        ["swim trunks", "blue trunks", "shirtless"],
+        androgynous: ["bikini", "blue bikini"]
+      },
+      compat: ["swimwear"],
+      archAffinity: ["cheerful", "cheeky"]
     },
-    "하이넥 경기용 수영복": {
-      tags: ["competition swimsuit", "one-piece swimsuit", "high-neck"],
-      compat: ["swimwear", "sport"]
+    "경기용 수영복": {
+      baseTags: ["competition swimsuit"],
+      genderTags: {
+        female:      ["one-piece swimsuit", "high-neck"],
+        male:        ["swim briefs", "athletic"],
+        androgynous: ["one-piece swimsuit", "high-neck"]
+      },
+      compat: ["swimwear", "sport"],
+      archAffinity: ["serious", "cool"]
+    },
+    "래시가드 + 보드숏 (수영)": {
+      baseTags: ["rash guard", "board shorts"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["swimwear", "sport"],
+      archAffinity: ["cheerful", "cool"]
     },
 
     // ──────── 겨울 ────────
-    "머스타드 더플 코트 + 목도리": {
-      tags: ["duffel coat", "yellow coat", "scarf", "winter clothes"],
-      compat: ["winter", "daily"]
+    "더플 코트 + 목도리": {
+      baseTags: ["duffel coat", "yellow coat", "scarf", "winter clothes"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["winter", "daily"],
+      archAffinity: ["cheerful", "gentle"]
     },
-    "흰색 퍼 후드 코트": {
-      tags: ["coat", "white coat", "fur trim", "hood", "winter clothes"],
-      compat: ["winter", "elegant"]
+    "퍼 후드 코트": {
+      baseTags: ["coat", "white coat", "fur trim", "hood", "winter clothes"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["winter", "elegant"],
+      archAffinity: ["gentle", "mysterious", "cool"]
     },
     "카멜 롱 코트 + 베레모": {
-      tags: ["long coat", "brown coat", "beret", "winter clothes", "boots"],
-      compat: ["winter", "elegant", "daily"]
+      baseTags: ["long coat", "brown coat", "beret", "winter clothes", "boots"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["winter", "elegant", "daily"],
+      archAffinity: ["cool", "gentle", "serious"]
     },
-    "두꺼운 니트 스웨터 + 털모자": {
-      tags: ["sweater", "knit cap", "winter clothes", "mittens"],
-      compat: ["winter", "casual"]
+    "니트 스웨터 + 털모자": {
+      baseTags: ["sweater", "knit cap", "winter clothes", "mittens"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["winter", "casual"],
+      archAffinity: ["cheerful", "shy", "gentle"]
+    },
+    "울 피코트 + 머플러": {
+      baseTags: ["peacoat", "black coat", "scarf", "winter clothes"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["winter", "daily", "formal"],
+      archAffinity: ["cool", "serious"]
+    },
+    "다운 파카 + 방한 장갑": {
+      baseTags: ["parka", "down jacket", "gloves", "winter clothes", "hood"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["winter", "casual"],
+      archAffinity: ["cheerful", "cheeky"]
     },
 
     // ──────── 엘레강트 / 드레스 ────────
-    "보라색 실크 슬립 드레스": {
-      tags: ["slip dress", "purple dress", "silk", "backless"],
-      compat: ["elegant", "formal", "mermaid_only"]
+    "실크 슬립 드레스": {
+      baseTags: ["silk"],
+      genderTags: {
+        female:      ["slip dress", "purple dress", "backless"],
+        male:        ["silk shirt", "purple shirt", "slacks"],
+        androgynous: ["slip dress", "purple dress", "backless"]
+      },
+      compat: ["elegant", "formal", "mermaid_only"],
+      archAffinity: ["mysterious", "cool", "fierce"]
     },
     "블랙 플레어 미니 드레스": {
-      tags: ["black dress", "a-line dress", "short dress", "sleeveless"],
-      compat: ["elegant", "formal", "dark"]
+      baseTags: ["black dress", "sleeveless"],
+      genderTags: {
+        female:      ["a-line dress", "short dress"],
+        male:        ["black vest", "black shirt", "slim pants"],
+        androgynous: ["a-line dress", "short dress"]
+      },
+      compat: ["elegant", "formal", "dark"],
+      archAffinity: ["cool", "fierce", "cheeky"]
     },
-    "아이보리 웨딩 드레스 + 베일": {
-      tags: ["wedding dress", "veil", "white dress", "long dress", "lace"],
-      compat: ["elegant", "formal", "celestial", "mermaid_only"]
+    "웨딩 드레스": {
+      baseTags: ["veil", "white dress", "lace"],
+      genderTags: {
+        female:      ["wedding dress", "long dress"],
+        male:        ["white suit", "white tuxedo", "boutonniere"],
+        androgynous: ["wedding dress", "long dress"]
+      },
+      compat: ["elegant", "formal", "celestial", "mermaid_only"],
+      archAffinity: ["gentle", "shy"]
     },
-    "붉은 장미 이브닝 드레스 + 레이스": {
-      tags: ["evening gown", "red dress", "lace", "long dress"],
-      compat: ["elegant", "formal", "mermaid_only"]
+    "장미 이브닝 드레스": {
+      baseTags: ["lace"],
+      genderTags: {
+        female:      ["evening gown", "red dress", "long dress"],
+        male:        ["red suit", "dress shirt", "rose boutonniere"],
+        androgynous: ["evening gown", "red dress", "long dress"]
+      },
+      compat: ["elegant", "formal", "mermaid_only"],
+      archAffinity: ["fierce", "mysterious"]
     },
     "에메랄드 그린 머메이드 드레스": {
-      tags: ["mermaid dress", "green dress", "long dress", "sequins"],
-      compat: ["elegant", "formal", "mermaid_only"]
+      baseTags: ["green dress", "sequins"],
+      genderTags: {
+        female:      ["mermaid dress", "long dress"],
+        male:        ["green suit", "sequined vest", "dress shirt"],
+        androgynous: ["mermaid dress", "long dress"]
+      },
+      compat: ["elegant", "formal", "mermaid_only"],
+      archAffinity: ["mysterious", "gentle", "fierce"]
     },
 
     // ──────── 유니폼 / 직업 ────────
-    "간호사복 (흰색)": {
-      tags: ["nurse", "nurse cap", "white dress", "pantyhose"],
-      compat: ["daily"]
+    "간호사 / 의료복": {
+      baseTags: ["nurse cap"],
+      genderTags: {
+        female:      ["nurse", "white dress", "pantyhose"],
+        male:        ["scrubs", "white shirt", "white pants"],
+        androgynous: ["nurse", "white dress", "pantyhose"]
+      },
+      compat: ["daily", "uniform"],
+      archAffinity: ["gentle", "serious", "cheerful"]
     },
-    "경찰 제복 + 모자": {
-      tags: ["police uniform", "police hat", "black pants", "belt"],
-      compat: ["formal", "daily"]
+    "경찰 제복": {
+      baseTags: ["police uniform", "police hat", "belt"],
+      genderTags: {
+        female:      ["pencil skirt", "pantyhose"],
+        male:        ["black pants"],
+        androgynous: ["black pants"]
+      },
+      compat: ["formal", "daily", "uniform"],
+      archAffinity: ["serious", "cool", "fierce"]
     },
-    "군복 (카키 + 군모)": {
-      tags: ["military uniform", "military hat", "khaki shirt", "belt"],
-      compat: ["formal", "daily"]
+    "군복": {
+      baseTags: ["military uniform", "military hat", "khaki shirt", "belt"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["formal", "daily", "uniform"],
+      archAffinity: ["serious", "fierce", "cool"]
     },
     "바리스타 앞치마 복장": {
-      tags: ["apron", "brown apron", "white shirt", "cafe"],
-      compat: ["daily", "casual"]
+      baseTags: ["apron", "brown apron", "white shirt", "cafe"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["daily", "casual"],
+      archAffinity: ["gentle", "cheerful"]
     },
-    "스튜어디스 유니폼": {
-      tags: ["stewardess", "pencil skirt", "neck scarf", "blazer"],
-      compat: ["formal"]
+    "스튜어디스 / 승무원 유니폼": {
+      baseTags: ["neck scarf", "blazer"],
+      genderTags: {
+        female:      ["stewardess", "pencil skirt"],
+        male:        ["pilot uniform", "slacks", "cap"],
+        androgynous: ["stewardess", "pencil skirt"]
+      },
+      compat: ["formal", "uniform"],
+      archAffinity: ["gentle", "serious", "cool"]
+    },
+    "의사 가운": {
+      baseTags: ["lab coat", "white coat", "stethoscope"],
+      genderTags: {
+        female:      ["pencil skirt"],
+        male:        ["slacks"],
+        androgynous: ["slacks"]
+      },
+      compat: ["formal", "daily", "uniform"],
+      archAffinity: ["serious", "gentle"]
+    },
+    "요리사복": {
+      baseTags: ["chef uniform", "chef hat", "apron", "white coat"],
+      genderTags: {
+        female:      [],
+        male:        [],
+        androgynous: []
+      },
+      compat: ["daily", "uniform"],
+      archAffinity: ["cheerful", "serious"]
     },
 
     // ──────── 인어 전용 ────────
     "조개 비키니 탑 + 비늘 꼬리": {
-      tags: ["seashell bikini top", "scales", "mermaid"],
+      baseTags: ["seashell bikini top", "scales", "mermaid"],
+      genderTags: {
+        female:      [],
+        male:        ["shirtless"],
+        androgynous: []
+      },
       compat: ["mermaid_only"]
     },
-    "얇은 베일 상의 + 진주 장식": {
-      tags: ["veil", "pearl necklace", "scales", "mermaid"],
-      compat: ["mermaid_only"]
+    "베일 상의 + 진주 장식": {
+      baseTags: ["veil", "pearl necklace", "scales", "mermaid"],
+      genderTags: {
+        female:      [],
+        male:        ["shirtless", "pearl bracelet"],
+        androgynous: []
+      },
+      compat: ["mermaid_only"],
+      archAffinity: ["mysterious", "gentle"]
     },
     "해초 랩 상의 + 꽃 장식": {
-      tags: ["flower", "scales", "mermaid", "bare shoulders"],
-      compat: ["mermaid_only"]
+      baseTags: ["flower", "scales", "mermaid", "bare shoulders"],
+      genderTags: {
+        female:      [],
+        male:        ["shirtless"],
+        androgynous: []
+      },
+      compat: ["mermaid_only"],
+      archAffinity: ["gentle", "cheerful"]
     },
 
     // ──────── 유령 / 신비 ────────
-    "하얀 빅토리안 롱 가운": {
-      tags: ["victorian", "white dress", "long dress", "lace", "long sleeves"],
-      compat: ["ghost_safe", "gothic", "elegant"]
+    "빅토리안 롱 가운": {
+      baseTags: ["victorian", "lace", "long sleeves"],
+      genderTags: {
+        female:      ["white dress", "long dress"],
+        male:        ["white shirt", "victorian coat", "cravat"],
+        androgynous: ["white dress", "long dress"]
+      },
+      compat: ["ghost_safe", "gothic", "elegant"],
+      archAffinity: ["mysterious", "gentle", "melancholic"]
     },
-    "검은 상복 롱 드레스": {
-      tags: ["black dress", "long dress", "veil", "mourning"],
-      compat: ["ghost_safe", "gothic", "dark"]
+    "검은 상복": {
+      baseTags: ["veil", "mourning"],
+      genderTags: {
+        female:      ["black dress", "long dress"],
+        male:        ["black suit", "black shirt", "black coat"],
+        androgynous: ["black dress", "long dress"]
+      },
+      compat: ["ghost_safe", "gothic", "dark"],
+      archAffinity: ["melancholic", "mysterious", "serious"]
     },
-    "얇은 흰 가운 + 흐르는 소매": {
-      tags: ["white dress", "long dress", "long sleeves", "flowy", "wide sleeves"],
-      compat: ["ghost_safe", "celestial", "elegant"]
+    "흰 가운 + 흐르는 소매": {
+      baseTags: ["long sleeves", "flowy", "wide sleeves"],
+      genderTags: {
+        female:      ["white dress", "long dress"],
+        male:        ["white robe", "long robe"],
+        androgynous: ["white dress", "long dress"]
+      },
+      compat: ["ghost_safe", "celestial", "elegant"],
+      archAffinity: ["gentle", "mysterious", "melancholic"]
     }
   },
 
@@ -1153,6 +1934,7 @@ const DATA = {
   archetype: {
     cheerful: {
       ko: "밝고 활기찬",
+      mood: ["energetic", "bright", "lively"],
       traits: {
         "cheerful":    "밝음",
         "energetic":   "활기참",
@@ -1194,6 +1976,7 @@ const DATA = {
     },
     gentle: {
       ko: "온화하고 다정한",
+      mood: ["warm", "soft", "serene"],
       traits: {
         "gentle":      "온화함",
         "kind":        "다정함",
@@ -1232,6 +2015,7 @@ const DATA = {
     },
     cool: {
       ko: "쿨하고 시크한",
+      mood: ["calm", "detached", "collected"],
       traits: {
         "cool":        "쿨함",
         "composed":    "침착함",
@@ -1270,6 +2054,7 @@ const DATA = {
     },
     shy: {
       ko: "수줍고 소심한",
+      mood: ["timid", "delicate", "fragile"],
       traits: {
         "shy":         "수줍음",
         "timid":       "소심함",
@@ -1308,6 +2093,7 @@ const DATA = {
     },
     fierce: {
       ko: "당당하고 도도한",
+      mood: ["intense", "commanding", "powerful"],
       traits: {
         "fierce":      "당당함",
         "proud":       "도도함",
@@ -1346,6 +2132,7 @@ const DATA = {
     },
     mysterious: {
       ko: "신비롭고 요염한",
+      mood: ["enigmatic", "ethereal", "haunting"],
       traits: {
         "mysterious":  "신비로움",
         "seductive":   "요염함",
@@ -1384,6 +2171,7 @@ const DATA = {
     },
     cheeky: {
       ko: "장난스러운",
+      mood: ["playful", "mischievous", "impish"],
       traits: {
         "cheeky":      "장난꾸러기",
         "mischievous": "짓궂음",
@@ -1422,6 +2210,7 @@ const DATA = {
     },
     serious: {
       ko: "진지하고 엄격한",
+      mood: ["solemn", "austere", "focused"],
       traits: {
         "serious":     "진지함",
         "disciplined": "규율적",
@@ -1460,6 +2249,7 @@ const DATA = {
     },
     melancholic: {
       ko: "우울하고 차분한",
+      mood: ["melancholy", "wistful", "nostalgic"],
       traits: {
         "melancholic": "우울함",
         "pensive":     "사색적",
@@ -1498,6 +2288,7 @@ const DATA = {
     },
     kuudere: {
       ko: "무심한 츤데레",
+      mood: ["cold", "distant", "reluctant"],
       traits: {
         "kuudere":     "쿠데레",
         "stoic":       "무덤덤",
@@ -1532,6 +2323,123 @@ const DATA = {
         "hiding behind object":      "뭔가 뒤에 숨기",
         "hands behind back, looking away":"뒷짐 + 외면",
         "glancing sideways":         "곁눈질"
+      }
+    },
+    airhead: {
+      ko: "천연덕스러운",
+      mood: ["dreamy", "whimsical", "carefree"],
+      traits: {
+        "airheaded":   "천연",
+        "carefree":    "걱정 없음",
+        "clumsy":      "덜렁댐",
+        "absent-minded":"멍때림",
+        "innocent":    "순수함",
+        "ditzy":       "어리바리",
+        "naive":       "순진함",
+        "spacey":      "몽롱함"
+      },
+      expressions: {
+        "blank stare":               "멍한 눈",
+        "smile, open mouth":         "입 벌린 미소",
+        "confused":                  "갸우뚱",
+        "surprised":                 "놀란 표정",
+        "sparkle eyes":              "반짝이는 눈",
+        "drooling":                  "침 흘림",
+        "tilted head, smile":        "고개 갸우뚱 미소",
+        "o_o":                       "동그란 눈",
+        "closed eyes, smile":        "편안한 눈웃음",
+        "puffed cheeks":             "볼 부풀리기"
+      },
+      poses: {
+        "head tilt":                 "고개 갸웃",
+        "arms behind back":          "뒷짐",
+        "tripping":                  "넘어지기",
+        "sitting on floor":          "바닥에 앉기",
+        "looking up":                "올려다보기",
+        "hands on own cheeks":       "양 볼에 손",
+        "pointing upward":           "위를 가리키기",
+        "waving":                    "손 흔들기",
+        "hugging object":            "뭔가 안기",
+        "lying down":                "드러눕기",
+        "spinning":                  "빙글 돌기"
+      }
+    },
+    bookworm: {
+      ko: "학구적인",
+      mood: ["studious", "intellectual", "contemplative"],
+      traits: {
+        "intellectual": "지적",
+        "studious":    "학구적",
+        "analytical":  "분석적",
+        "curious":     "호기심",
+        "methodical":  "체계적",
+        "observant":   "관찰력",
+        "logical":     "논리적",
+        "patient":     "인내심"
+      },
+      expressions: {
+        "thinking":                  "생각 중",
+        "focused expression":        "집중한 표정",
+        "slight smile":              "살짝 미소",
+        "narrowed eyes":             "가늘게 뜬 눈",
+        "looking over glasses":      "안경 너머로 보기",
+        "closed mouth":              "입 다문 표정",
+        "curious expression":        "호기심 표정",
+        "raised eyebrow":            "눈썹 치켜올림",
+        "half-closed eyes":          "반쯤 감은 눈",
+        "gentle smile":              "잔잔한 미소"
+      },
+      poses: {
+        "reading book":              "책 읽기",
+        "adjusting glasses":         "안경 고쳐쓰기",
+        "hand on own chin":          "턱에 손",
+        "writing":                   "글 쓰기",
+        "sitting at desk":           "책상에 앉기",
+        "holding book":              "책 들기",
+        "looking at viewer":         "정면 응시",
+        "crossed arms":              "팔짱",
+        "finger pointing up":        "검지 올리기",
+        "leaning on hand":           "손에 기대기",
+        "pushing glasses up":        "안경 올리기"
+      }
+    },
+    warrior: {
+      ko: "전사형",
+      mood: ["fierce", "resolute", "battle-ready"],
+      traits: {
+        "brave":       "용감함",
+        "fearless":    "무서움 없음",
+        "determined":  "결의",
+        "protective":  "수호자",
+        "honorable":   "명예로움",
+        "battle-hardened":"역전의 용사",
+        "loyal":       "충성스러움",
+        "relentless":  "불굴"
+      },
+      expressions: {
+        "determined":                "결연함",
+        "sharp eyes":                "날카로운 눈",
+        "battle cry":                "함성",
+        "serious":                   "진지함",
+        "gritting teeth":            "이 악물기",
+        "confident":                 "자신만만",
+        "glaring":                   "노려봄",
+        "smirk":                     "씩 웃음",
+        "narrowed eyes":             "가늘게 뜬 눈",
+        "war face":                  "전투 표정"
+      },
+      poses: {
+        "holding sword":             "검 들기",
+        "fighting stance":           "전투 자세",
+        "holding weapon":            "무기 들기",
+        "charging":                  "돌진",
+        "defensive stance":          "방어 자세",
+        "standing tall":             "우뚝 서기",
+        "fist clenched":             "주먹 쥐기",
+        "looking over shoulder":     "어깨 너머로 보기",
+        "kneeling with sword":       "검과 함께 무릎 꿇기",
+        "arms crossed":              "팔짱",
+        "drawing weapon":            "무기 뽑기"
       }
     }
   },
@@ -1623,13 +2531,44 @@ const pick = (obj) => {
   const keys = Object.keys(obj);
   return keys[Math.floor(Math.random() * keys.length)];
 };
-// 현재 머리 길이 level보다 작거나 같은 minLevel을 가진 항목만 필터링해서 뽑기
 const pickByMinLevel = (obj, currentLevel) => {
   const validKeys = Object.keys(obj).filter(k => obj[k].minLevel <= currentLevel);
   return validKeys[Math.floor(Math.random() * validKeys.length)];
 };
+const pickWeighted = (arr, weightMap) => {
+  // weightMap: { key: weight } — 기본 1, 매칭되면 weight 적용
+  const weighted = arr.map(k => ({ key: k, w: weightMap[k] || 1 }));
+  const total = weighted.reduce((s, x) => s + x.w, 0);
+  let r = Math.random() * total;
+  for (const item of weighted) {
+    r -= item.w;
+    if (r <= 0) return item.key;
+  }
+  return weighted[weighted.length - 1].key;
+};
 const getVal = (id) => document.getElementById(id).value;
 const resolve = (selected, dataObj) => selected === "random" ? pick(dataObj) : selected;
+
+// ── 톤 변조 헬퍼 ──
+function applyTone(baseKey, baseObj, toneModifiers, noToneList, suffix) {
+  // suffix: "hair" or "eyes"
+  const baseKo = baseObj[baseKey];
+  if (noToneList.includes(baseKey) || Math.random() > 0.3) {
+    // 톤 없이 기본
+    return {
+      tag: baseKey + " " + suffix,
+      ko: baseKo,
+      display: baseKo
+    };
+  }
+  const toneKey = pick(toneModifiers);
+  const toneKo = toneModifiers[toneKey];
+  return {
+    tag: toneKey + " " + baseKey + " " + suffix,
+    ko: toneKo + " " + baseKo,
+    display: toneKo + " " + baseKo
+  };
+}
 
 function makeSid() {
   const chars = "0123456789ABCDEF";
@@ -1639,11 +2578,8 @@ function makeSid() {
 }
 document.getElementById("session").textContent = "SID · " + makeSid();
 
-// ============================================
-// HISTORY SYSTEM
-// ============================================
-const history = [];      // 생성된 페르소나 배열
-let currentIdx = -1;     // 현재 보고 있는 인덱스
+const history = [];
+let currentIdx = -1;
 
 function generate() {
   const genderKey  = resolve(getVal("opt-gender"), DATA.gender);
@@ -1651,128 +2587,29 @@ function generate() {
   const skinKey    = resolve(getVal("opt-skin"), DATA.skin);
   const buildKey   = resolve(getVal("opt-build"), DATA.build);
 
-  // 의상: 종족 호환성 + 사용자 선택 카테고리 기반 필터링
-  const speciesCompat = DATA.species[speciesKey].compat;
-  const outfitCategory = getVal("opt-outfit"); // "random" or a category
-  const allOutfits = Object.keys(DATA.outfit);
-
-  const filteredOutfits = allOutfits.filter(name => {
-    const outfitCompat = DATA.outfit[name].compat;
-    // 이 의상이 현재 종족에게 허용되는지 — 겹치는 카테고리가 하나라도 있어야 함
-    const speciesOk = outfitCompat.some(c => speciesCompat.includes(c));
-    if (!speciesOk) return false;
-    // 사용자가 카테고리를 지정했으면 그 카테고리도 포함되어야 함
-    if (outfitCategory !== "random") {
-      return outfitCompat.includes(outfitCategory);
-    }
-    return true;
-  });
-
-  // 해당 종족에 맞는 코디가 하나도 없다면 fallback — 종족 기본 호환을 전부 사용
-  let outfitKey;
-  if (filteredOutfits.length > 0) {
-    outfitKey = filteredOutfits[Math.floor(Math.random() * filteredOutfits.length)];
-  } else {
-    // 사용자가 선택한 카테고리가 현재 종족과 안 맞는 경우 → 종족 기준으로만 다시 필터
-    const speciesOnly = allOutfits.filter(name => {
-      return DATA.outfit[name].compat.some(c => speciesCompat.includes(c));
-    });
-    outfitKey = speciesOnly[Math.floor(Math.random() * speciesOnly.length)];
-  }
-
-  // 수인이면 세부 동물 추가 추출
-  let beastkinAnimalKey = null;
-  if (speciesKey === "beastkin") {
-    beastkinAnimalKey = pick(DATA.beastkinAnimal);
-  }
-
-  const hairColorKey  = pick(DATA.hairColor);
-  const hairLengthKey = pick(DATA.hairLength);
-  const currentLevel  = DATA.hairLength[hairLengthKey].level;
-  const hairStyleKey  = pickByMinLevel(DATA.hairStyle, currentLevel);
-  const bangsKey      = pickByMinLevel(DATA.bangs, currentLevel);
-  const eyeShapeKey   = pick(DATA.eyeShape);
-  const eyeColorKey   = pick(DATA.eyeColor);
-  const incAge = document.getElementById("inc-age").checked;
-  const ageKey = incAge ? pick(DATA.ageTag) : "adult";
-
-  // 부분염색 (15% 확률): 메인 머리색 + 다른 색 포인트
-  // "{color1}, {color2} hair, streaked hair" 형태의 조합
-  let streakedHair = null;
-  if (Math.random() < 0.15) {
-    // 메인 색과 다른 색 하나 더 고르기
-    const allColors = Object.keys(DATA.hairColor).filter(c => c !== "gradient hair");
-    const shuffled = [...allColors].sort(() => Math.random() - 0.5);
-    const main = shuffled[0];
-    const accent = shuffled.find(c => c !== main);
-    streakedHair = {
-      main,
-      accent,
-      mainKo: DATA.hairColor[main],
-      accentKo: DATA.hairColor[accent]
-    };
-  }
-
-  // 오드아이 (10% 확률): 좌우 다른 색
-  let heterochromia = null;
-  if (Math.random() < 0.10) {
-    const allEyes = Object.keys(DATA.eyeColor);
-    const shuffled = [...allEyes].sort(() => Math.random() - 0.5);
-    const left = shuffled[0].replace(" eyes", "");
-    const right = shuffled.find(c => c !== shuffled[0]).replace(" eyes", "");
-    heterochromia = {
-      left, right,
-      leftKo: DATA.eyeColor[left + " eyes"],
-      rightKo: DATA.eyeColor[right + " eyes"]
-    };
-  }
-
-  const includeBreast = genderKey === "female" || genderKey === "androgynous";
-  const breastKey = includeBreast ? pick(DATA.breast) : null;
-
-  // 체크박스 상태 확인
+  // ── 아키타입 (의상 가중치에도 쓰이므로 먼저 뽑음) ──
   const incPers = document.getElementById("inc-personality").checked;
   const incExpr = document.getElementById("inc-expression").checked;
   const incPose = document.getElementById("inc-pose").checked;
-  const incAcc  = document.getElementById("inc-accessory").checked;
-  const incDet  = document.getElementById("inc-detail").checked;
-  const incComp = document.getElementById("inc-composition").checked;
 
-  // 액세서리 (50% 확률로 나옴, 켜져있을 때만)
-  let accessory = null;
-  if (incAcc && Math.random() < 0.7) {
-    const accKey = pick(DATA.accessory);
-    accessory = { key: accKey, ko: DATA.accessory[accKey] };
-  }
-
-  // 특수 디테일 (켜져있으면 항상 하나 나옴)
-  let detail = null;
-  if (incDet) {
-    const detKey = pick(DATA.detail);
-    detail = { key: detKey, ko: DATA.detail[detKey] };
-  }
-
-  // 구도
-  let composition = null;
-  if (incComp) {
-    const compKey = pick(DATA.composition);
-    composition = { key: compKey, ko: DATA.composition[compKey] };
-  }
-
-  // 하나라도 체크되어 있으면 아키타입을 하나 뽑음
   let archetypeKey = null;
-  let personality = null;   // { koList: [...], tagList: [...] }
-  let expression  = null;   // { ko, key }
-  let pose        = null;   // { ko, key }
+  let personality = null;
+  let expression  = null;
+  let pose        = null;
+  let moodTag     = null;
 
   if (incPers || incExpr || incPose) {
     archetypeKey = pick(DATA.archetype);
     const arch = DATA.archetype[archetypeKey];
 
+    // 분위기 키워드 — mood 배열에서 하나 뽑아서 자연스럽게 삽입
+    if (arch.mood && arch.mood.length > 0) {
+      moodTag = arch.mood[Math.floor(Math.random() * arch.mood.length)];
+    }
+
     if (incPers) {
-      // 성격 키워드 2~3개 랜덤 추출 (중복 없이)
       const traitKeys = Object.keys(arch.traits);
-      const n = 2 + Math.floor(Math.random() * 2); // 2 or 3
+      const n = 2 + Math.floor(Math.random() * 2);
       const shuffled = [...traitKeys].sort(() => Math.random() - 0.5);
       const picked = shuffled.slice(0, Math.min(n, traitKeys.length));
       personality = {
@@ -1780,18 +2617,135 @@ function generate() {
         koList: picked.map(k => arch.traits[k])
       };
     }
-
     if (incExpr) {
       const exprKey = pick(arch.expressions);
       expression = { key: exprKey, ko: arch.expressions[exprKey] };
     }
-
     if (incPose) {
       const poseKey = pick(arch.poses);
       pose = { key: poseKey, ko: arch.poses[poseKey] };
     }
   }
 
+  // ── 의상: 종족 호환 + 성별 필터 + 아키타입 가중치 ──
+  const speciesCompat = DATA.species[speciesKey].compat;
+  const outfitCategory = getVal("opt-outfit");
+  const allOutfits = Object.keys(DATA.outfit);
+
+  const filteredOutfits = allOutfits.filter(name => {
+    const o = DATA.outfit[name];
+    // 종족 호환
+    const speciesOk = o.compat.some(c => speciesCompat.includes(c));
+    if (!speciesOk) return false;
+    // 카테고리 필터
+    if (outfitCategory !== "random" && !o.compat.includes(outfitCategory)) return false;
+    // 성별 필터 — gender 배열이 있으면 현재 성별이 포함되어야 함
+    if (o.genderTags && !o.genderTags[genderKey]) return false;
+    return true;
+  });
+
+  // 아키타입 가중치 맵 생성
+  const weightMap = {};
+  if (archetypeKey) {
+    filteredOutfits.forEach(name => {
+      const aff = DATA.outfit[name].archAffinity;
+      if (aff && aff.includes(archetypeKey)) {
+        weightMap[name] = 2;
+      }
+    });
+  }
+
+  let outfitKey;
+  if (filteredOutfits.length > 0) {
+    outfitKey = pickWeighted(filteredOutfits, weightMap);
+  } else {
+    // fallback — 성별 필터만으로 재시도
+    const fallback = allOutfits.filter(name => {
+      const o = DATA.outfit[name];
+      if (o.genderTags && !o.genderTags[genderKey]) return false;
+      return o.compat.some(c => speciesCompat.includes(c));
+    });
+    outfitKey = fallback.length > 0
+      ? fallback[Math.floor(Math.random() * fallback.length)]
+      : allOutfits[Math.floor(Math.random() * allOutfits.length)];
+  }
+
+  // 수인 동물
+  let beastkinAnimalKey = null;
+  if (speciesKey === "beastkin") {
+    beastkinAnimalKey = pick(DATA.beastkinAnimal);
+  }
+
+  // ── 머리색 (톤 변조) ──
+  const hairBaseKey = pick(DATA.hairColorBase);
+  const hairColor = applyTone(hairBaseKey, DATA.hairColorBase, DATA.hairToneModifiers, DATA.hairNoTone, "hair");
+
+  // ── 머리 길이/스타일/앞머리 ──
+  const hairLengthKey = pick(DATA.hairLength);
+  const currentLevel  = DATA.hairLength[hairLengthKey].level;
+  const hairStyleKey  = pickByMinLevel(DATA.hairStyle, currentLevel);
+  const bangsKey      = pickByMinLevel(DATA.bangs, currentLevel);
+
+  // ── 눈 (톤 변조) ──
+  const eyeShapeKey = pick(DATA.eyeShape);
+  const eyeBaseKey  = pick(DATA.eyeColorBase);
+  const eyeColor    = applyTone(eyeBaseKey, DATA.eyeColorBase, DATA.eyeToneModifiers, DATA.eyeNoTone, "eyes");
+
+  const incAge = document.getElementById("inc-age").checked;
+  const ageKey = incAge ? pick(DATA.ageTag) : "adult";
+
+  // ── 부분염색 (15%) ──
+  let streakedHair = null;
+  if (Math.random() < 0.15 && hairBaseKey !== "gradient") {
+    const others = Object.keys(DATA.hairColorBase).filter(c => c !== hairBaseKey && c !== "gradient");
+    const accent = others[Math.floor(Math.random() * others.length)];
+    const accentColor = applyTone(accent, DATA.hairColorBase, DATA.hairToneModifiers, DATA.hairNoTone, "hair");
+    streakedHair = {
+      main: hairColor,
+      accent: accentColor
+    };
+  }
+
+  // ── 오드아이 (10%) ──
+  let heterochromia = null;
+  if (Math.random() < 0.10) {
+    const others = Object.keys(DATA.eyeColorBase).filter(c => c !== eyeBaseKey);
+    const other = others[Math.floor(Math.random() * others.length)];
+    const otherColor = applyTone(other, DATA.eyeColorBase, DATA.eyeToneModifiers, DATA.eyeNoTone, "eyes");
+    heterochromia = {
+      left: eyeColor,
+      right: otherColor
+    };
+  }
+
+  const includeBreast = genderKey === "female" || genderKey === "androgynous";
+  const breastKey = includeBreast ? pick(DATA.breast) : null;
+
+  const incAcc  = document.getElementById("inc-accessory").checked;
+  const incDet  = document.getElementById("inc-detail").checked;
+  const incComp = document.getElementById("inc-composition").checked;
+
+  let accessory = null;
+  if (incAcc && Math.random() < 0.7) {
+    const accKey = pick(DATA.accessory);
+    accessory = { key: accKey, ko: DATA.accessory[accKey] };
+  }
+
+  let detail = null;
+  if (incDet) {
+    const detKey = pick(DATA.detail);
+    detail = { key: detKey, ko: DATA.detail[detKey] };
+  }
+
+  let composition = null;
+  if (incComp) {
+    const compKey = pick(DATA.composition);
+    composition = { key: compKey, ko: DATA.composition[compKey] };
+  }
+
+  // ══════════════════════════════
+  // 태그 조립
+  // ══════════════════════════════
   const tags = [];
   tags.push(DATA.gender[genderKey].tag);
   tags.push("solo");
@@ -1800,61 +2754,55 @@ function generate() {
     DATA.beastkinAnimal[beastkinAnimalKey].tags.forEach(t => { if (!tags.includes(t)) tags.push(t); });
   }
 
-  // 인어 성별별 추가 태그 (AI가 꼬리를 제대로 그려주도록)
   if (speciesKey === "mermaid") {
-    if (genderKey === "female") {
-      tags.push("monster girl");
-      tags.push("lower body fish");
-    } else if (genderKey === "male") {
-      tags.push("merman");
-      tags.push("lower body fish");
-    } else {
-      tags.push("lower body fish");
-    }
+    if (genderKey === "female") { tags.push("monster girl"); tags.push("lower body fish"); }
+    else if (genderKey === "male") { tags.push("merman"); tags.push("lower body fish"); }
+    else { tags.push("lower body fish"); }
   }
 
   tags.push(ageKey);
 
-  // 머리색: 부분염색이면 두 색 + streaked hair, 아니면 단일 색
+  // 머리색
   if (streakedHair) {
-    tags.push(streakedHair.main);
-    tags.push(streakedHair.accent);
+    tags.push(streakedHair.main.tag);
+    tags.push(streakedHair.accent.tag);
     tags.push("streaked hair");
     tags.push("multicolored hair");
   } else {
-    tags.push(hairColorKey);
+    tags.push(hairColor.tag);
   }
   tags.push(hairLengthKey);
   tags.push(hairStyleKey);
   tags.push(bangsKey);
 
-  // 눈: 오드아이이면 좌우 다른 색 + heterochromia, 아니면 단일 색
+  // 눈
   tags.push(eyeShapeKey);
   if (heterochromia) {
     tags.push("heterochromia");
-    tags.push(heterochromia.left + " eyes");
-    tags.push(heterochromia.right + " eyes");
+    tags.push(heterochromia.left.tag);
+    tags.push(heterochromia.right.tag);
   } else {
-    tags.push(eyeColorKey);
+    tags.push(eyeColor.tag);
   }
-  if (skinKey && DATA.skin[skinKey] && !tags.includes(skinKey)) tags.push(skinKey);
+
+  if (skinKey && !tags.includes(skinKey)) tags.push(skinKey);
   DATA.build[buildKey].tags.forEach(t => { if (!tags.includes(t)) tags.push(t); });
   if (breastKey) tags.push(breastKey);
-  DATA.outfit[outfitKey].tags.forEach(t => { if (!tags.includes(t)) tags.push(t); });
 
-  if (accessory) {
-    if (!tags.includes(accessory.key)) tags.push(accessory.key);
-  }
-  if (detail) {
-    if (!tags.includes(detail.key)) tags.push(detail.key);
-  }
-  if (composition) {
-    if (!tags.includes(composition.key)) tags.push(composition.key);
-  }
+  // 의상 태그 (baseTags + genderTags 조합)
+  const outfitData = DATA.outfit[outfitKey];
+  outfitData.baseTags.forEach(t => { if (!tags.includes(t)) tags.push(t); });
+  const gTags = outfitData.genderTags[genderKey];
+  if (gTags) gTags.forEach(t => { if (!tags.includes(t)) tags.push(t); });
 
-  // 성격은 danbooru 태그로 잘 안쓰이는 경우가 많아서 프롬프트에만 넣을지 제외
-  // → 여기서는 성격 중 danbooru에 있는 것들만 안전하게 포함 (안전을 위해 제외)
-  // 표정/포즈는 태그로 실제 쓰이니까 포함
+  if (accessory && !tags.includes(accessory.key)) tags.push(accessory.key);
+  if (detail && !tags.includes(detail.key)) tags.push(detail.key);
+  if (composition && !tags.includes(composition.key)) tags.push(composition.key);
+
+  // 분위기 키워드 삽입
+  if (moodTag && !tags.includes(moodTag)) tags.push(moodTag);
+
+  // 표정/포즈
   if (expression) {
     expression.key.split(", ").forEach(t => { if (!tags.includes(t)) tags.push(t); });
   }
@@ -1864,30 +2812,33 @@ function generate() {
 
   const uniqueTags = [...new Set(tags)];
 
+  // ══════════════════════════════
+  // 페르소나 객체
+  // ══════════════════════════════
   const persona = {
     gender:     { key: genderKey,  ko: DATA.gender[genderKey].ko, tag: DATA.gender[genderKey].tag },
     species: beastkinAnimalKey
-      ? { key: `beastkin (${beastkinAnimalKey})`,
-          ko: `수인 (${DATA.beastkinAnimal[beastkinAnimalKey].ko})` }
+      ? { key: `beastkin (${beastkinAnimalKey})`, ko: `수인 (${DATA.beastkinAnimal[beastkinAnimalKey].ko})` }
       : { key: speciesKey, ko: DATA.species[speciesKey].ko },
     skin:       { key: skinKey,    ko: DATA.skin[skinKey] },
     build:      { key: buildKey,   ko: DATA.build[buildKey].ko },
     outfit:     { key: outfitKey,  ko: outfitKey },
-    hairColor:  streakedHair
-      ? { key: `${streakedHair.main} + ${streakedHair.accent}, streaked`,
-          ko: `${streakedHair.mainKo} + ${streakedHair.accentKo} (부분염색)` }
-      : { key: hairColorKey, ko: DATA.hairColor[hairColorKey] },
+    hairColor: streakedHair
+      ? { key: `${streakedHair.main.tag} + ${streakedHair.accent.tag}, streaked`,
+          ko: `${streakedHair.main.ko} + ${streakedHair.accent.ko} (부분염색)` }
+      : { key: hairColor.tag, ko: hairColor.ko },
     hairLength: { key: hairLengthKey, ko: DATA.hairLength[hairLengthKey].ko },
     hairStyle:  { key: hairStyleKey,  ko: DATA.hairStyle[hairStyleKey].ko },
     bangs:      { key: bangsKey,      ko: DATA.bangs[bangsKey].ko },
     eyeShape:   { key: eyeShapeKey,   ko: DATA.eyeShape[eyeShapeKey] },
-    eyeColor:   heterochromia
-      ? { key: `${heterochromia.left}/${heterochromia.right}, heterochromia`,
-          ko: `왼쪽 ${heterochromia.leftKo} + 오른쪽 ${heterochromia.rightKo} (오드아이)` }
-      : { key: eyeColorKey, ko: DATA.eyeColor[eyeColorKey] },
+    eyeColor: heterochromia
+      ? { key: `${heterochromia.left.tag}/${heterochromia.right.tag}, heterochromia`,
+          ko: `${heterochromia.left.ko} + ${heterochromia.right.ko} (오드아이)` }
+      : { key: eyeColor.tag, ko: eyeColor.ko },
     age:        { key: ageKey, ko: DATA.ageTag[ageKey], included: incAge },
     breast: breastKey ? { key: breastKey, ko: DATA.breast[breastKey] } : null,
     archetype: archetypeKey ? { key: archetypeKey, ko: DATA.archetype[archetypeKey].ko } : null,
+    mood: moodTag ? { key: moodTag, ko: moodTag } : null,
     personality,
     expression,
     pose,
@@ -1931,6 +2882,8 @@ function render() {
   if (p.accessory)   traits.push(["액세서리", p.accessory.ko, p.accessory.key]);
   if (p.detail)      traits.push(["디테일", p.detail.ko, p.detail.key]);
   if (p.composition) traits.push(["구도", p.composition.ko, p.composition.key]);
+  if (p.archetype)   traits.push(["아키타입", p.archetype.ko, p.archetype.key]);
+  if (p.mood)        traits.push(["분위기", p.mood.ko, p.mood.key]);
   if (p.personality) traits.push(["성격", p.personality.koList.join(", "), p.personality.keys.join(", ")]);
   if (p.expression)  traits.push(["표정", p.expression.ko, p.expression.key]);
   if (p.pose)        traits.push(["포즈", p.pose.ko, p.pose.key]);
@@ -1952,7 +2905,6 @@ function render() {
   const nextDisabled = currentIdx >= history.length - 1 ? "disabled" : "";
   const personaNum = String(currentIdx + 1).padStart(3, "0");
 
-  // 삼각형 아이콘 (SVG)
   const triLeft  = `<svg width="8" height="10" viewBox="0 0 8 10" fill="currentColor"><path d="M7 0L0 5L7 10V0Z"/></svg>`;
   const triRight = `<svg width="8" height="10" viewBox="0 0 8 10" fill="currentColor"><path d="M1 0L8 5L1 10V0Z"/></svg>`;
 
@@ -1979,13 +2931,11 @@ function render() {
     </div>
   `;
 
-  // 페이지네이션 이벤트
   const prevBtn = document.getElementById("pager-prev");
   const nextBtn = document.getElementById("pager-next");
   if (!prevBtn.disabled) prevBtn.addEventListener("click", () => navigate(-1));
   if (!nextBtn.disabled) nextBtn.addEventListener("click", () => navigate(1));
 
-  // 복사 버튼
   document.getElementById("copy-btn").addEventListener("click", () => {
     navigator.clipboard.writeText(tagString).then(() => {
       const btn = document.getElementById("copy-btn");
