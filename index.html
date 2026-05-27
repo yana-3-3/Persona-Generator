@@ -1151,6 +1151,7 @@ const DATA = {
         androgynous: ["pleated skirt", "thighhighs"]
       },
       compat: ["school"],
+      speciesBlock: ["dragon", "spirit", "ghost", "doll"],
       archAffinity: ["cheerful", "gentle", "shy"]
     },
     "체크 블레이저 교복": {
@@ -1160,7 +1161,8 @@ const DATA = {
         male:        ["plaid pants"],
         androgynous: ["plaid skirt"]
       },
-      compat: ["school"]
+      compat: ["school"],
+      speciesBlock: ["dragon", "spirit", "ghost", "doll"]
     },
     "블랙 블레이저 교복": {
       baseTags: ["school uniform", "black blazer"],
@@ -1170,6 +1172,7 @@ const DATA = {
         androgynous: ["pleated skirt", "thighhighs", "loafers"]
       },
       compat: ["school"],
+      speciesBlock: ["dragon", "spirit", "ghost", "doll"],
       archAffinity: ["cool", "serious"]
     },
     "카디건 교복": {
@@ -1180,6 +1183,7 @@ const DATA = {
         androgynous: ["pleated skirt"]
       },
       compat: ["school"],
+      speciesBlock: ["dragon", "spirit", "ghost", "doll"],
       archAffinity: ["gentle", "shy"]
     },
     "하복 교복": {
@@ -1189,7 +1193,8 @@ const DATA = {
         male:        ["shorts"],
         androgynous: ["pleated skirt"]
       },
-      compat: ["school"]
+      compat: ["school"],
+      speciesBlock: ["dragon", "spirit", "ghost", "doll"]
     },
     "가쿠란 교복": {
       baseTags: ["school uniform", "gakuran", "stand collar"],
@@ -1199,6 +1204,7 @@ const DATA = {
         androgynous: ["black pants"]
       },
       compat: ["school"],
+      speciesBlock: ["dragon", "spirit", "ghost", "doll"],
       archAffinity: ["serious", "cool", "fierce"]
     },
     "마법 학생 로브": {
@@ -1221,6 +1227,7 @@ const DATA = {
         androgynous: []
       },
       compat: ["sport", "casual"],
+      speciesBlock: ["dragon", "spirit", "mermaid", "ghost"],
       archAffinity: ["cheerful", "serious"]
     },
     "스포츠 탑 + 레깅스": {
@@ -1565,6 +1572,7 @@ const DATA = {
         androgynous: ["pleated skirt"]
       },
       compat: ["school", "sport"],
+      speciesBlock: ["dragon", "spirit", "mermaid", "ghost", "doll"],
       archAffinity: ["cheerful", "cheeky", "fierce"]
     },
     "마녀 / 마법사 복장": {
@@ -1646,7 +1654,8 @@ const DATA = {
         male:        ["swim trunks", "black trunks", "shirtless"],
         androgynous: ["black swimsuit"]
       },
-      compat: ["swimwear", "school"]
+      compat: ["swimwear", "school"],
+      speciesBlock: ["angel", "demon", "dragon", "fairy", "spirit", "ghost", "doll"]
     },
     "세일러 비키니": {
       baseTags: ["sailor bikini"],
@@ -1802,6 +1811,7 @@ const DATA = {
         androgynous: ["nurse", "white dress", "pantyhose"]
       },
       compat: ["daily", "uniform"],
+      speciesBlock: ["dragon", "fairy", "spirit", "mermaid", "ghost"],
       archAffinity: ["gentle", "serious", "cheerful"]
     },
     "경찰 제복": {
@@ -1812,6 +1822,7 @@ const DATA = {
         androgynous: ["black pants"]
       },
       compat: ["formal", "daily", "uniform"],
+      speciesBlock: ["angel", "demon", "dragon", "fairy", "spirit", "mermaid", "ghost", "doll"],
       archAffinity: ["serious", "cool", "fierce"]
     },
     "군복": {
@@ -1822,6 +1833,7 @@ const DATA = {
         androgynous: []
       },
       compat: ["formal", "daily", "uniform"],
+      speciesBlock: ["angel", "fairy", "spirit", "mermaid", "ghost", "doll"],
       archAffinity: ["serious", "fierce", "cool"]
     },
     "바리스타 앞치마 복장": {
@@ -1832,6 +1844,7 @@ const DATA = {
         androgynous: []
       },
       compat: ["daily", "casual"],
+      speciesBlock: ["angel", "demon", "dragon", "fairy", "spirit", "mermaid", "ghost", "doll"],
       archAffinity: ["gentle", "cheerful"]
     },
     "스튜어디스 / 승무원 유니폼": {
@@ -1842,6 +1855,7 @@ const DATA = {
         androgynous: ["stewardess", "pencil skirt"]
       },
       compat: ["formal", "uniform"],
+      speciesBlock: ["angel", "demon", "dragon", "fairy", "spirit", "mermaid", "ghost", "doll"],
       archAffinity: ["gentle", "serious", "cool"]
     },
     "의사 가운": {
@@ -1852,6 +1866,7 @@ const DATA = {
         androgynous: ["slacks"]
       },
       compat: ["formal", "daily", "uniform"],
+      speciesBlock: ["dragon", "fairy", "spirit", "mermaid", "ghost"],
       archAffinity: ["serious", "gentle"]
     },
     "요리사복": {
@@ -1862,6 +1877,7 @@ const DATA = {
         androgynous: []
       },
       compat: ["daily", "uniform"],
+      speciesBlock: ["angel", "demon", "dragon", "fairy", "spirit", "mermaid", "ghost", "doll"],
       archAffinity: ["cheerful", "serious"]
     },
 
@@ -2641,6 +2657,7 @@ function generate() {
     if (outfitCategory !== "random" && !o.compat.includes(outfitCategory)) return false;
     // 성별 필터 — gender 배열이 있으면 현재 성별이 포함되어야 함
     if (o.genderTags && !o.genderTags[genderKey]) return false;
+    if (o.speciesBlock && o.speciesBlock.includes(speciesKey)) return false;
     return true;
   });
 
